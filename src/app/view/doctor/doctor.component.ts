@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {PanelService} from '../../services/panel.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+
+import {DoctorService} from '../../services/doctor.service';
 
 @Component({
   selector: 'app-doctor',
@@ -7,11 +11,34 @@ import {PanelService} from '../../services/panel.service';
   styleUrls: ['./doctor.component.scss']
 })
 export class DoctorComponent implements OnInit {
-  constructor(private panelService: PanelService) {
-    panelService.setPanelTitle('Doctors');
+  displayedColumns: string[] = ['doctorId', 'name', 'address', 'tel'];
+  dataSource: MatTableDataSource<DoctorDTO>;
+
+  doctors: DoctorDTO[] = [] ;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  constructor(private doctorService: DoctorService) {
   }
 
   ngOnInit() {
+    this.doctorService.getAllDoctors().subscribe( value => {
+      // @ts-ignore
+      this.doctors = value.body;
+      // Assign the data to the data source for the table to render
+      this.dataSource = new MatTableDataSource(this.doctors);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, error => {
+      console.log(error);
+    });
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }
