@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LbdModule } from '../../lbd/lbd.module';
 import { NguiMapModule} from '@ngui/map';
 import { AdminLayoutRoutes } from './admin-layout.routing';
@@ -15,6 +15,7 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {MaterialComponent} from '../../material/material.component';
 import {
+  MatAutocompleteModule,
   MatCheckboxModule,
   MatDialogModule,
   MatFormFieldModule,
@@ -44,7 +45,9 @@ import {SavemodalComponent} from '../../view/doctor/savemodal/savemodal.componen
     MatDialogModule,
     MatOptionModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule
   ],
   entryComponents: [
     SavemodalComponent
