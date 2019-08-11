@@ -1,16 +1,10 @@
-// @ts-ignore
 import { NgModule } from '@angular/core';
-// @ts-ignore
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-// @ts-ignore
 import { FormsModule} from '@angular/forms';
-
 import { LbdModule } from '../../lbd/lbd.module';
 import { NguiMapModule} from '@ngui/map';
-
 import { AdminLayoutRoutes } from './admin-layout.routing';
-
 import { HomeComponent } from '../../home/home.component';
 import { UserComponent } from '../../user/user.component';
 import { TablesComponent } from '../../tables/tables.component';
@@ -20,9 +14,19 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {MaterialComponent} from '../../material/material.component';
-import {MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
+import {
+  MatCheckboxModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatOptionModule,
+  MatPaginatorModule, MatSelectModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
 import {DoctorComponent} from '../../view/doctor/doctor.component';
 import {PanelHeadComponent} from '../../view/panel-head/panel-head.component';
+import {SavemodalComponent} from '../../view/doctor/savemodal/savemodal.component';
 
 
 @NgModule({
@@ -36,7 +40,14 @@ import {PanelHeadComponent} from '../../view/panel-head/panel-head.component';
     MatFormFieldModule,
     MatPaginatorModule,
     MatInputModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatCheckboxModule
+  ],
+  entryComponents: [
+    SavemodalComponent
   ],
   declarations: [
     HomeComponent,
@@ -49,7 +60,8 @@ import {PanelHeadComponent} from '../../view/panel-head/panel-head.component';
     UpgradeComponent,
     PanelHeadComponent,
     MaterialComponent,
-    DoctorComponent
+    DoctorComponent,
+    SavemodalComponent
   ]
 })
 

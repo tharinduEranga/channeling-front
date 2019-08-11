@@ -1,0 +1,137 @@
+<div style="width: 50vw; height: 75vh" class="container">
+    <h2 mat-dialog-title>Save a new Doctor</h2>
+    <mat-dialog-content class="mat-typography">
+        <h3>Please insert relevant data in below form</h3>
+        <!--<mat-dialog-actions>-->
+        <div class="row">
+
+            <div class="example-container col-md-12">
+                <mat-form-field appearance="outline">
+                    <input [(ngModel)]="name" matInput placeholder="Name" name="name">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <textarea [(ngModel)]="address" matInput placeholder="Address" name="address"></textarea>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input [(ngModel)]="tel" matInput placeholder="Mobile" type="tel" name="tel">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select placeholder="Hospital">
+                        <mat-option value="option" *ngFor="let hospital of hospitals" (change)="setHospital(hospital)">
+                            {{hospital.hospitalName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select placeholder="Speciality" (selectionChange)="setSpeciality()">
+                        <mat-option value="option" *ngFor="let speciality of specialities" [value]="speciality">
+                            {{speciality.specialityName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <mat-checkbox name="monday">Monday</mat-checkbox>
+                        </div>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="From" name="monfrom">
+                        </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="To" name="monto">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <mat-checkbox name="tuesday">Tuesday</mat-checkbox>
+                        </div>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="From" name="tuesfrom">
+                        </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="To" name="tuesto">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <mat-checkbox name="wednesday">Wednesday</mat-checkbox>
+                        </div>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="From" name="wedfrom">
+                        </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="To" name="wedto">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <mat-checkbox name="thursday">Thursday</mat-checkbox>
+                        </div>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="From" name="thursfrom">
+                        </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="To" name="thursto">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <mat-checkbox name="friday">Friday</mat-checkbox>
+                        </div>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="From" name="frifrom">
+                        </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="To" name="frito">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <mat-checkbox name="saturday">Saturday</mat-checkbox>
+                        </div>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="From" name="satfrom">
+                        </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="To" name="satto">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <mat-checkbox name="sunday">Sunday</mat-checkbox>
+                        </div>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="From" name="sunfrom">
+                        </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <input matInput type="time" placeholder="To" name="sunto">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <mat-form-field>
+                    <input matInput placeholder="Username" type="text" name="username">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Password" type="password" name="password">
+                </mat-form-field>
+
+            </div>
+
+            <div class="container-fluid">
+                <button mat-button mat-dialog-close class="btn btn-danger col-md-5 col-sm-12">Cancel</button>
+                <div class="col-md-2 col-sm-0"></div>
+                <button mat-button [mat-dialog-close]="false" class="btn btn-success col-md-5 col-sm-12">Save</button>
+            </div>
+
+        </div>
+        <!--</mat-dialog-actions>-->
+
+    </mat-dialog-content>
+</div>
