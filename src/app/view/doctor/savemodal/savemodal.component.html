@@ -19,7 +19,8 @@
                 </mat-form-field>
 
                 <mat-form-field class="example-full-width">
-                    <input type="text" placeholder="Hospital" aria-label="Number" matInput [formControl]="myControlHospital"
+                    <input type="text" placeholder="Hospital" aria-label="Number" matInput
+                           [formControl]="myControlHospital"
                            [matAutocomplete]="autoHospital">
                     <mat-autocomplete autoActiveFirstOption #autoHospital="matAutocomplete"
                                       [displayWith]="displayFnHospital">
@@ -31,9 +32,11 @@
                 </mat-form-field>
 
                 <mat-form-field class="example-full-width">
-                    <input type="text" placeholder="Speciality" aria-label="Number" matInput [formControl]="myControlSpeciality"
+                    <input type="text" placeholder="Speciality" aria-label="Number" matInput
+                           [formControl]="myControlSpeciality"
                            [matAutocomplete]="autoSpeciality">
-                    <mat-autocomplete autoActiveFirstOption #autoSpeciality="matAutocomplete" [displayWith]="displayFnSpeciality" >
+                    <mat-autocomplete autoActiveFirstOption #autoSpeciality="matAutocomplete"
+                                      [displayWith]="displayFnSpeciality">
                         <mat-option *ngFor="let speciality of filteredSpecialities | async" [value]="speciality"
                                     (onSelectionChange)="setSpeciality(speciality)">
                             {{speciality.specialityName}}
@@ -42,91 +45,132 @@
                 </mat-form-field>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-4">
-                            <mat-checkbox name="monday">Monday</mat-checkbox>
-                        </div>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="From" name="monfrom">
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="To" name="monto">
-                        </mat-form-field>
+
+                    <div class="col-md-5">
+                        <br>
+                        <h3>Available days</h3>
+                    </div>
+                    <div class="col-md-2" style="width: 190px">
+                        <br>
+                        <h3>From</h3>
+                    </div>
+                    <div class="col-md-2">
+                        <br>
+                        <h3>To</h3>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-4">
-                            <mat-checkbox name="tuesday">Tuesday</mat-checkbox>
+                            <mat-checkbox name="monday" #monCheck
+                                          [checked]="isMonday" (change)="isMonday = !isMonday" [value]="days[0]">Monday
+                            </mat-checkbox>
                         </div>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="From" name="tuesfrom">
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="To" name="tuesto">
-                        </mat-form-field>
+                        <div *ngIf="isMonday">
+                            <div class="col-md-4">
+                                <input atp-time-picker [(ngModel)]="monfrom" placeholder="From" name="monfrom"/>
+                            </div>
+                            <div class="col-md-4">
+                                <input atp-time-picker [(ngModel)]="monto" placeholder="To" name="monto"/>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-4">
-                            <mat-checkbox name="wednesday">Wednesday</mat-checkbox>
+                            <mat-checkbox name="tuesday" #tueCheck
+                                          [checked]="isTuesday" (change)="isTuesday = !isTuesday" [value]="days[1]">Tuesday
+                            </mat-checkbox>
                         </div>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="From" name="wedfrom">
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="To" name="wedto">
-                        </mat-form-field>
+                        <div *ngIf="isTuesday">
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="From" name="tuesfrom" [(ngModel)]="tuefrom">
+                            </div>
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="To" name="tuesto" [(ngModel)]="tueto">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-4">
-                            <mat-checkbox name="thursday">Thursday</mat-checkbox>
+                            <mat-checkbox name="wednesday" #wedCheck
+                                          [checked]="isWednesday" (change)="isWednesday = !isWednesday" [value]="days[2]">Wednesday
+                            </mat-checkbox>
                         </div>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="From" name="thursfrom">
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="To" name="thursto">
-                        </mat-form-field>
+                        <div *ngIf="isWednesday">
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="From" name="wedfrom" [(ngModel)]="wedfrom">
+                            </div>
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="To" name="wedto" [(ngModel)]="wedto">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-4">
-                            <mat-checkbox name="friday">Friday</mat-checkbox>
+                            <mat-checkbox name="thursday" #thuCheck
+                                          [checked]="isThursday" (change)="isThursday = !isThursday" [value]="days[3]">Thursday
+                            </mat-checkbox>
                         </div>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="From" name="frifrom">
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="To" name="frito">
-                        </mat-form-field>
+                        <div *ngIf="isThursday">
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="From" name="thursfrom" [(ngModel)]="thursfrom">
+                            </div>
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="To" name="thursto" [(ngModel)]="thursto">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-4">
-                            <mat-checkbox name="saturday">Saturday</mat-checkbox>
+                            <mat-checkbox name="friday" #friCheck
+                                          [checked]="isFriday" (change)="isFriday = !isFriday" [value]="days[4]">Friday
+                            </mat-checkbox>
                         </div>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="From" name="satfrom">
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="To" name="satto">
-                        </mat-form-field>
+                        <div *ngIf="isFriday">
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="From" name="frifrom" [(ngModel)]="frifrom">
+                            </div>
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="To" name="frito" [(ngModel)]="frito">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-4">
-                            <mat-checkbox name="sunday">Sunday</mat-checkbox>
+                            <mat-checkbox name="saturday" #satCheck
+                                          [checked]="isSaturday" (change)="isSaturday = !isSaturday" [value]="days[5]">Saturday
+                            </mat-checkbox>
                         </div>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="From" name="sunfrom">
-                        </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                            <input matInput type="time" placeholder="To" name="sunto">
-                        </mat-form-field>
+                        <div *ngIf="isSaturday">
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="From" name="satfrom" [(ngModel)]="satfrom">
+                            </div>
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="To" name="satto" [(ngModel)]="satto">
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <mat-checkbox name="sunday" #sunCheck
+                                          [checked]="isSunday" (change)="isSunday = !isSunday" [value]="days[6]">Sunday
+                            </mat-checkbox>
+                        </div>
+                        <div *ngIf="isSunday">
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="From" name="sunfrom" [(ngModel)]="sunfrom">
+                            </div>
+                            <div class="col-md-4">
+                                <input atp-time-picker placeholder="To" name="sunto" [(ngModel)]="sunto">
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
 
                 <mat-form-field>
-                    <input matInput placeholder="Username" type="text" name="username">
+                    <input matInput placeholder="Username" type="text" name="username" [(ngModel)]="username">
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input matInput placeholder="Password" type="password" name="password">
+                    <input matInput placeholder="Password" type="password" name="password" [(ngModel)]="password">
                 </mat-form-field>
 
             </div>
@@ -134,7 +178,9 @@
             <div class="container-fluid">
                 <button mat-button mat-dialog-close class="btn btn-danger col-md-5 col-sm-12">Cancel</button>
                 <div class="col-md-2 col-sm-0"></div>
-                <button mat-button [mat-dialog-close]="false" class="btn btn-success col-md-5 col-sm-12">Save</button>
+                <button mat-button  class="btn btn-success col-md-5 col-sm-12"
+                        (click)="saveDoctor()">Save
+                </button>
             </div>
 
         </div>

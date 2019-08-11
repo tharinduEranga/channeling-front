@@ -60,11 +60,11 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="actions">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 5vw"> Actions </th>
                                     <mat-cell *matCellDef="let row" >
-                                        <button mat-button class="btn btn-primary" (click)="tableClick(row)">Edit</button>
+                                        <button mat-button class="btn btn-primary table-btn" (click)="tableClick(row)">Edit</button>
                                         <label style="color: white"> |||| </label>
-                                        <button mat-button class="btn btn-danger">Delete</button>
+                                        <button mat-button class="btn btn-danger table-btn">Delete</button>
                                     </mat-cell>
                                 </ng-container>
 

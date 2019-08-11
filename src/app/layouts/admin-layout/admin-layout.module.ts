@@ -6,14 +6,11 @@ import { LbdModule } from '../../lbd/lbd.module';
 import { NguiMapModule} from '@ngui/map';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { HomeComponent } from '../../home/home.component';
-import { UserComponent } from '../../user/user.component';
 import { TablesComponent } from '../../tables/tables.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
-import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import {MaterialComponent} from '../../material/material.component';
 import {
   MatAutocompleteModule,
   MatCheckboxModule,
@@ -28,6 +25,7 @@ import {
 import {DoctorComponent} from '../../view/doctor/doctor.component';
 import {PanelHeadComponent} from '../../view/panel-head/panel-head.component';
 import {SavemodalComponent} from '../../view/doctor/savemodal/savemodal.component';
+import {AmazingTimePickerModule} from 'amazing-time-picker';
 
 
 @NgModule({
@@ -47,22 +45,20 @@ import {SavemodalComponent} from '../../view/doctor/savemodal/savemodal.componen
     MatSelectModule,
     MatCheckboxModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    AmazingTimePickerModule
   ],
   entryComponents: [
     SavemodalComponent
   ],
   declarations: [
     HomeComponent,
-    UserComponent,
     TablesComponent,
     TypographyComponent,
     IconsComponent,
-    MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
     PanelHeadComponent,
-    MaterialComponent,
     DoctorComponent,
     SavemodalComponent
   ]

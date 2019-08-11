@@ -5,6 +5,8 @@ import {SpecialityService} from '../../../services/speciality.service';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {DaysService} from '../../../services/days.service';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-savemodal',
@@ -17,46 +19,50 @@ export class SavemodalComponent implements OnInit {
   private name: string;
   private address: string;
   private tel: string;
-  // "speciality":{
-  //   "specialityId":20,
-  //   "specialityName":"Neuro Surgeon"
-  // },
-  // "hospital":{
-  //   "hospitalId":21,
-  //   "hospitalName":"Asiri Hospitals Colombo"
-  // },
-  // "daysDTOs":[
-  //     {
-  //       "dayId":12,
-  //       "day":"",
-  //       "from":"15:30:00",
-  //       "to":"18:50:00"
-  //     },
-  //     {
-  //       "dayId":13,
-  //       "day":"",
-  //       "from":"14:00:00",
-  //       "to":"15:30:00"
-  //     }
-  //     ],
-  // "adminDTO":{
-  //   "userName":"thar",
-  //   "password":123
-  // }
 
-  myControlHospital = new FormControl();
+  private isMonday = false;
+  private isTuesday = false;
+  private isWednesday = false;
+  private isThursday = false;
+  private isFriday = false;
+  private isSaturday = false;
+  private isSunday = false;
+
+  private monfrom = '00:00';
+  private monto = '00:00';
+  private tuefrom = '00:00';
+  private tueto = '00:00';
+  private wedfrom = '00:00';
+  private wedto = '00:00';
+  private thursfrom = '00:00';
+  private thursto = '00:00';
+  private frifrom = '00:00';
+  private frito = '00:00';
+  private satfrom = '00:00';
+  private satto = '00:00';
+  private sunfrom = '00:00';
+  private sunto = '00:00';
+  private username: string = null;
+  private password: string = null;
+
+  private myControlHospital = new FormControl();
   private hospitals: HospitalDTO[] = [];
-  filteredHospitals: Observable<HospitalDTO[]>;
+  private filteredHospitals: Observable<HospitalDTO[]>;
 
-  myControlSpeciality = new FormControl();
+  private myControlSpeciality = new FormControl();
   private specialities: SpecialityDTO[] = [];
-  filteredSpecialities: Observable<SpecialityDTO[]>;
+  private filteredSpecialities: Observable<SpecialityDTO[]>;
 
-  constructor(private doctorService: DoctorService, private hospitalService: HospitalService, private specialityService: SpecialityService) {
+  private days: DaysDTO[] = [];
+
+  constructor(private doctorService: DoctorService, private hospitalService: HospitalService,
+            private specialityService: SpecialityService, private daysService: DaysService, private dialog: MatDialog) {
   }
+
   ngOnInit() {
     this.getAllHospitals();
     this.getAllSpecialities();
+    this.getAllDays();
   }
 
   displayFnHospital(hospital?: HospitalDTO): string | undefined {
@@ -104,10 +110,105 @@ export class SavemodalComponent implements OnInit {
     } )
   }
 
+  private getAllDays() {
+    this.daysService.getAll().subscribe(value => {
+      this.days = value.body;
+    }, error => {
+      console.log(error);
+    } );
+  }
+
   setHospital(hospital) {
-    console.log(hospital);
+    this.hospital = hospital;
   }
   setSpeciality(speciality) {
-    console.log(speciality);
+    this.speciality = speciality;
   }
+
+  saveDoctor() {
+    const docDays = [];
+    if (this.isMonday) {
+      docDays.push({
+        dayId: this.days[0].dayId,
+        day: this.days[0].day,
+        from: this.monfrom + ':00',
+        to: this.monto + ':00',
+      });
+    }
+    if (this.isTuesday) {
+      docDays.push({
+        dayId: this.days[1].dayId,
+        day: this.days[1].day,
+        from: this.monfrom + ':00',
+        to: this.monto + ':00',
+      });
+    }
+    if (this.isWednesday) {
+      docDays.push({
+        dayId: this.days[2].dayId,
+        day: this.days[2].day,
+        from: this.monfrom + ':00',
+        to: this.monto + ':00',
+      });
+    }
+    if (this.isThursday) {
+      docDays.push({
+        dayId: this.days[3].dayId,
+        day: this.days[3].day,
+        from: this.monfrom + ':00',
+        to: this.monto + ':00',
+      });
+    }
+    if (this.isFriday) {
+      docDays.push({
+        dayId: this.days[4].dayId,
+        day: this.days[4].day,
+        from: this.monfrom + ':00',
+        to: this.monto + ':00',
+      });
+    }
+    if (this.isSaturday) {
+      docDays.push({
+        dayId: this.days[5].dayId,
+        day: this.days[5].day,
+        from: this.monfrom + ':00',
+        to: this.monto + ':00',
+      });
+    }
+    if (this.isSunday) {
+      docDays.push({
+        dayId: this.days[6].dayId,
+        day: this.days[6].day,
+        from: this.monfrom + ':00',
+        to: this.monto + ':00',
+      });
+    }
+
+    const doctor = {
+      doctorId: 0,
+      name: 'Dr. ' + this.name,
+      address: this.address,
+      tel: this.tel,
+      speciality: this.speciality,
+      hospital: this.hospital,
+      daysDTOs: docDays,
+      adminDTO: {
+        userName: this.username,
+        password: this.password
+      }
+    };
+    this.doctorService.save(doctor).subscribe(value => {
+      console.log(value);
+      if (value.success) {
+        alert('Success');
+        this.dialog.closeAll();
+      } else {
+        alert('Error');
+      }
+    }, error => {
+      alert('Server Error');
+      console.log(error);
+    });
+  }
+
 }

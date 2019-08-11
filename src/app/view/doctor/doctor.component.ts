@@ -21,6 +21,10 @@ export class DoctorComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllDoctors();
+  }
+
+  public getAllDoctors() {
     this.doctorService.getAll().subscribe( value => {
       // @ts-ignore
       this.doctors = value.body;
@@ -66,8 +70,11 @@ export class DoctorComponent implements OnInit {
   }
   tableClick (row) {
     console.log(row);
+    this.openDialog();
   }
   openDialog() {
-    this.dialog.open(SavemodalComponent);
+    this.dialog.open(SavemodalComponent).afterClosed().subscribe(value => {
+      this.getAllDoctors();
+    });
   }
 }

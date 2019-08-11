@@ -13,10 +13,10 @@ export class DataService <T> {
   }
 
   save (resource) {
-    return this.http.post(this.API_URL, resource);
+    return this.http.post<CommonResponse<T>>(this.API_URL, resource);
   }
   update (resource) {
-    return this.http.put(this.API_URL, resource);
+    return this.http.put<CommonResponse<T>>(this.API_URL, resource);
   }
   delete (id) {
     return this.http.delete<CommonResponse<T>>(this.API_URL + id);
