@@ -70,10 +70,12 @@ export class DoctorComponent implements OnInit {
   }
   tableClick (row) {
     console.log(row);
+    this.doctorService.setdoctor(row);
     this.openDialog();
   }
   openDialog() {
     this.dialog.open(SavemodalComponent).afterClosed().subscribe(value => {
+      this.doctorService.setdoctor(undefined);
       this.getAllDoctors();
     });
   }
