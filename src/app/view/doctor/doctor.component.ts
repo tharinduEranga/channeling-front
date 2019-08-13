@@ -69,8 +69,12 @@ export class DoctorComponent implements OnInit {
     }
   }
   tableClick (row) {
-    console.log(row);
     this.doctorService.setdoctor(row);
+    this.doctorService.setIsUpdate(true);
+    this.openDialog();
+  }
+  addNewClick () {
+    this.doctorService.setIsUpdate(false);
     this.openDialog();
   }
   openDialog() {

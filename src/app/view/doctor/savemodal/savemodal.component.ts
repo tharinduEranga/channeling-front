@@ -77,6 +77,49 @@ export class SavemodalComponent implements OnInit {
         this.getAllDays();
         if (this.doctorService.getDoctor() !== undefined) {
             this.doctor = JSON.parse(JSON.stringify(this.doctorService.getDoctor()));
+
+            // runs following if condition if the adminDto is null as is may cause exceptions in dom
+            if (this.doctor.adminDTO === null || this.doctor.adminDTO === undefined) {
+                this.doctor.adminDTO = {
+                    userName: '',
+                    password: ''
+                };
+            }
+
+            for (let i = 0; i < this.doctor.daysDTOs.length; i++) {
+                const day = this.doctor.daysDTOs[i];
+                const dayName = day.day;
+
+                if (dayName === 'Monday') {
+                    this.isMonday = true;
+                    this.monfrom = day.from;
+                    this.monto = day.to;
+                } else if (dayName === 'Tuesday') {
+                    this.isTuesday = true;
+                    this.tuefrom = day.from;
+                    this.tueto = day.to;
+                } else if (dayName === 'Wednesday') {
+                    this.isWednesday = true;
+                    this.wedfrom = day.from;
+                    this.wedto = day.to;
+                } else if (dayName === 'Thursday') {
+                    this.isThursday = true;
+                    this.thursfrom = day.from;
+                    this.thursto = day.to;
+                } else if (dayName === 'Friday') {
+                    this.isFriday = true;
+                    this.frifrom = day.from;
+                    this.frito = day.to;
+                } else if (dayName === 'Saturday') {
+                    this.isSaturday = true;
+                    this.satfrom = day.from;
+                    this.satto = day.to;
+                } else if (dayName === 'Sunday') {
+                    this.isSunday = true;
+                    this.sunfrom = day.from;
+                    this.sunto = day.to;
+                }
+            }
         }
     }
 
@@ -143,6 +186,7 @@ export class SavemodalComponent implements OnInit {
     }
 
     saveDoctor() {
+        console.log(this.monfrom + ':00');
         const docDays = [];
         if (this.isMonday) {
             docDays.push({
@@ -156,53 +200,74 @@ export class SavemodalComponent implements OnInit {
             docDays.push({
                 dayId: this.days[1].dayId,
                 day: this.days[1].day,
-                from: this.monfrom + ':00',
-                to: this.monto + ':00',
+                from: this.tuefrom + ':00',
+                to: this.tueto + ':00',
             });
         }
         if (this.isWednesday) {
             docDays.push({
                 dayId: this.days[2].dayId,
                 day: this.days[2].day,
-                from: this.monfrom + ':00',
-                to: this.monto + ':00',
+                from: this.wedfrom + ':00',
+                to: this.wedto + ':00',
             });
         }
         if (this.isThursday) {
             docDays.push({
                 dayId: this.days[3].dayId,
                 day: this.days[3].day,
-                from: this.monfrom + ':00',
-                to: this.monto + ':00',
+                from: this.thursfrom + ':00',
+                to: this.thursto + ':00',
             });
         }
         if (this.isFriday) {
             docDays.push({
                 dayId: this.days[4].dayId,
                 day: this.days[4].day,
-                from: this.monfrom + ':00',
-                to: this.monto + ':00',
+                from: this.frifrom + ':00',
+                to: this.frito + ':00',
             });
         }
         if (this.isSaturday) {
             docDays.push({
                 dayId: this.days[5].dayId,
                 day: this.days[5].day,
-                from: this.monfrom + ':00',
-                to: this.monto + ':00',
+                from: this.satfrom + ':00',
+                to: this.satto + ':00',
             });
         }
         if (this.isSunday) {
             docDays.push({
                 dayId: this.days[6].dayId,
                 day: this.days[6].day,
-                from: this.monfrom + ':00',
-                to: this.monto + ':00',
+                from: this.sunfrom + ':00',
+                to: this.sunto + ':00',
             });
         }
 
+        console.log(this.doctorService.getIsUpdate());
+        // if (this.doctorService.getIsUpdate()) {
+        //     for (let i = 0; i < docDays.length; i++) {
+        //         for (let j = 0; j < this.doctor.daysDTOs.length; j++) {
+        //             if (docDays[i].dayId === this.doctor.daysDTOs[j].dayId) {
+        //                 docDays[i].from = this.doctor.daysDTOs[j].from;
+        //                 docDays[i].to = this.doctor.daysDTOs[j].to;
+        //             }
+        //         }
+        //     }
+        // }
+
+        for (let i = 0; i < docDays.length; i++) {
+            if (docDays[i].from.split(':').length > 3) {
+                docDays[i].from = docDays[i].from.split(':')[0] + ':' + docDays[i].from.split(':')[1] + ':' + docDays[i].from.split(':')[2];
+            }
+            if (docDays[i].to.split(':').length > 3) {
+                docDays[i].to = docDays[i].to.split(':')[0] + ':' + docDays[i].to.split(':')[1] + ':' + docDays[i].to.split(':')[2];
+            }
+        }
+
         const doctor = {
-            doctorId: 0,
+            doctorId: this.doctor.doctorId,
             name: 'Dr. ' + this.doctor.name,
             address: this.doctor.address,
             tel: this.doctor.tel,
@@ -215,20 +280,35 @@ export class SavemodalComponent implements OnInit {
             }
         };
         this.doctor.daysDTOs = docDays;
-        this.doctor.name = 'Dr. ' + this.doctor.name;
+        console.log(doctor);
 
-        this.doctorService.save(doctor).subscribe(value => {
-            console.log(value);
-            if (value.success) {
-                alert('Success');
-                this.dialog.closeAll();
-            } else {
-                alert('Error');
-            }
-        }, error => {
-            alert('Server Error');
-            console.log(error);
-        });
+        if (this.doctorService.getIsUpdate()) {
+            this.doctorService.update(doctor).subscribe(value => {
+                console.log(value);
+                if (value.success) {
+                    alert('Success');
+                    this.dialog.closeAll();
+                } else {
+                    alert('Error');
+                }
+            }, error => {
+                alert('Server Error');
+                console.log(error);
+            });
+        } else {
+            this.doctorService.save(doctor).subscribe(value => {
+                console.log(value);
+                if (value.success) {
+                    alert('Success');
+                    this.dialog.closeAll();
+                } else {
+                    alert('Error');
+                }
+            }, error => {
+                alert('Server Error');
+                console.log(error);
+            });
+        }
     }
 
 }
