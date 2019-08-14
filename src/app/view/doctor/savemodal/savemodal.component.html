@@ -166,11 +166,13 @@
                 </div><br>
 
                 <mat-form-field>
-                    <input matInput placeholder="Username" type="text" name="username" [(ngModel)]="doctor.adminDTO.userName">
+                    <input matInput placeholder="Username" type="text" name="username" (focus)="userNameReadOnly=false"
+                           [(ngModel)]="doctor.adminDTO.userName" autocomplete="off" [readonly]="userNameReadOnly">
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input matInput placeholder="Password" type="password" name="password" [(ngModel)]="doctor.adminDTO.password">
+                    <input matInput placeholder="Password" type="password" name="password" (focus)="passwordReadOnly=false"
+                           [(ngModel)]="doctor.adminDTO.password" autocomplete="off" [readonly]="passwordReadOnly">
                 </mat-form-field>
 
             </div>

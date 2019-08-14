@@ -66,6 +66,8 @@ export class SavemodalComponent implements OnInit {
     private filteredSpecialities: Observable<SpecialityDTO[]>;
 
     private days: DaysDTO[] = [];
+    userNameReadOnly = true;
+    passwordReadOnly = true;
 
     constructor(private doctorService: DoctorService, private hospitalService: HospitalService,
                 private specialityService: SpecialityService, private daysService: DaysService, private dialog: MatDialog) {
@@ -75,52 +77,7 @@ export class SavemodalComponent implements OnInit {
         this.getAllHospitals();
         this.getAllSpecialities();
         this.getAllDays();
-        if (this.doctorService.getDoctor() !== undefined) {
-            this.doctor = JSON.parse(JSON.stringify(this.doctorService.getDoctor()));
-
-            // runs following if condition if the adminDto is null as is may cause exceptions in dom
-            if (this.doctor.adminDTO === null || this.doctor.adminDTO === undefined) {
-                this.doctor.adminDTO = {
-                    userName: '',
-                    password: ''
-                };
-            }
-
-            for (let i = 0; i < this.doctor.daysDTOs.length; i++) {
-                const day = this.doctor.daysDTOs[i];
-                const dayName = day.day;
-
-                if (dayName === 'Monday') {
-                    this.isMonday = true;
-                    this.monfrom = day.from;
-                    this.monto = day.to;
-                } else if (dayName === 'Tuesday') {
-                    this.isTuesday = true;
-                    this.tuefrom = day.from;
-                    this.tueto = day.to;
-                } else if (dayName === 'Wednesday') {
-                    this.isWednesday = true;
-                    this.wedfrom = day.from;
-                    this.wedto = day.to;
-                } else if (dayName === 'Thursday') {
-                    this.isThursday = true;
-                    this.thursfrom = day.from;
-                    this.thursto = day.to;
-                } else if (dayName === 'Friday') {
-                    this.isFriday = true;
-                    this.frifrom = day.from;
-                    this.frito = day.to;
-                } else if (dayName === 'Saturday') {
-                    this.isSaturday = true;
-                    this.satfrom = day.from;
-                    this.satto = day.to;
-                } else if (dayName === 'Sunday') {
-                    this.isSunday = true;
-                    this.sunfrom = day.from;
-                    this.sunto = day.to;
-                }
-            }
-        }
+        this.setDoctor();
     }
 
     displayFnHospital(hospital ?: HospitalDTO): string | undefined {
@@ -245,17 +202,6 @@ export class SavemodalComponent implements OnInit {
             });
         }
 
-        console.log(this.doctorService.getIsUpdate());
-        // if (this.doctorService.getIsUpdate()) {
-        //     for (let i = 0; i < docDays.length; i++) {
-        //         for (let j = 0; j < this.doctor.daysDTOs.length; j++) {
-        //             if (docDays[i].dayId === this.doctor.daysDTOs[j].dayId) {
-        //                 docDays[i].from = this.doctor.daysDTOs[j].from;
-        //                 docDays[i].to = this.doctor.daysDTOs[j].to;
-        //             }
-        //         }
-        //     }
-        // }
 
         for (let i = 0; i < docDays.length; i++) {
             if (docDays[i].from.split(':').length > 3) {
@@ -280,7 +226,6 @@ export class SavemodalComponent implements OnInit {
             }
         };
         this.doctor.daysDTOs = docDays;
-        console.log(doctor);
 
         if (this.doctorService.getIsUpdate()) {
             this.doctorService.update(doctor).subscribe(value => {
@@ -311,4 +256,54 @@ export class SavemodalComponent implements OnInit {
         }
     }
 
+    private setDoctor() {
+        if (this.doctorService.getDoctor() !== undefined) {
+            this.doctor = JSON.parse(JSON.stringify(this.doctorService.getDoctor()));
+
+            // runs following if condition if the adminDto is null as is may cause exceptions in dom
+            if (this.doctor.adminDTO === null || this.doctor.adminDTO === undefined) {
+                this.doctor.adminDTO = {
+                    userName: '',
+                    password: ''
+                };
+            }
+
+            for (let i = 0; i < this.doctor.daysDTOs.length; i++) {
+                const day = this.doctor.daysDTOs[i];
+                const dayName = day.day;
+
+                if (dayName === 'Monday') {
+                    this.isMonday = true;
+                    this.monfrom = day.from;
+                    this.monto = day.to;
+                } else if (dayName === 'Tuesday') {
+                    this.isTuesday = true;
+                    this.tuefrom = day.from;
+                    this.tueto = day.to;
+                } else if (dayName === 'Wednesday') {
+                    this.isWednesday = true;
+                    this.wedfrom = day.from;
+                    this.wedto = day.to;
+                } else if (dayName === 'Thursday') {
+                    this.isThursday = true;
+                    this.thursfrom = day.from;
+                    this.thursto = day.to;
+                } else if (dayName === 'Friday') {
+                    this.isFriday = true;
+                    this.frifrom = day.from;
+                    this.frito = day.to;
+                } else if (dayName === 'Saturday') {
+                    this.isSaturday = true;
+                    this.satfrom = day.from;
+                    this.satto = day.to;
+                } else if (dayName === 'Sunday') {
+                    this.isSunday = true;
+                    this.sunfrom = day.from;
+                    this.sunto = day.to;
+                }
+            }
+            this.myControlHospital.setValue(this.doctor.hospital);
+            this.myControlSpeciality.setValue(this.doctor.speciality);
+        }
+    }
 }
