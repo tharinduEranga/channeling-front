@@ -7,6 +7,7 @@ import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {DaysService} from '../../../services/days.service';
 import {MatDialog} from '@angular/material';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-savemodal',
@@ -229,29 +230,21 @@ export class SavemodalComponent implements OnInit {
 
         if (this.doctorService.getIsUpdate()) {
             this.doctorService.update(doctor).subscribe(value => {
-                console.log(value);
                 if (value.success) {
-                    alert('Success');
+                    Swal.fire('Done!', 'Doctor is Updated!', 'success');
                     this.dialog.closeAll();
                 } else {
-                    alert('Error');
+                    Swal.fire('Failed!', value.message, 'error');
                 }
-            }, error => {
-                alert('Server Error');
-                console.log(error);
             });
         } else {
             this.doctorService.save(doctor).subscribe(value => {
-                console.log(value);
                 if (value.success) {
-                    alert('Success');
+                    Swal.fire('Done!', 'Doctor is Added!', 'success');
                     this.dialog.closeAll();
                 } else {
-                    alert('Error');
+                    Swal.fire('Failed!', value.message, 'error');
                 }
-            }, error => {
-                alert('Server Error');
-                console.log(error);
             });
         }
     }

@@ -28,6 +28,8 @@ import {SavemodalComponent} from '../../view/doctor/savemodal/savemodal.componen
 import {AmazingTimePickerModule} from 'amazing-time-picker';
 import {LoadingComponent} from '../../view/loading/loading.component';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
+import {OtherComponent} from '../../view/other/other.component';
+import {SaveComponent} from '../../view/other/save/save.component';
 
 
 @NgModule({
@@ -54,7 +56,8 @@ import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
     SweetAlert2Module
   ],
   entryComponents: [
-    SavemodalComponent
+    SavemodalComponent,
+    SaveComponent
   ],
   declarations: [
     HomeComponent,
@@ -66,7 +69,9 @@ import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
     PanelHeadComponent,
     DoctorComponent,
     SavemodalComponent,
-    LoadingComponent
+    LoadingComponent,
+    OtherComponent,
+    SaveComponent
   ]
 })
 

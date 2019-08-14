@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 
 export class ErrorHandleChennel  implements ErrorHandler {
     handleError(error: any): void {
-        Swal.fire('Oops', 'Something went wrong!', 'error').catch();
+        console.log(error);
+        Swal.fire('Oops', 'Something went wrong!', 'error');
     }
 }

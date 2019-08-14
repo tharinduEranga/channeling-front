@@ -8,6 +8,7 @@ import { IconsComponent } from '../../icons/icons.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {DoctorComponent} from '../../view/doctor/doctor.component';
+import {OtherComponent} from '../../view/other/other.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: HomeComponent },
@@ -17,5 +18,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'doctors',        component: DoctorComponent },
+    { path: 'other',          component: OtherComponent },
 
 ];
