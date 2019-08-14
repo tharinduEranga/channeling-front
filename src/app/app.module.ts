@@ -1,7 +1,7 @@
 // @ts-ignore
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // @ts-ignore
-import { NgModule } from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 // @ts-ignore
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LoginComponent } from './login/login.component';
+import {ErrorHandleChennel} from './util/ErrorHandleChennel';
 
 
 @NgModule({
@@ -35,7 +36,9 @@ import { LoginComponent } from './login/login.component';
     AdminLayoutComponent,
     LoginComponent
   ],
-  providers: [],
+  providers: [
+    {provide: ErrorHandler, useClass: ErrorHandleChennel}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

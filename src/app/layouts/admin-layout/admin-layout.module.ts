@@ -18,7 +18,7 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatOptionModule,
-  MatPaginatorModule, MatSelectModule,
+  MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule,
   MatSortModule,
   MatTableModule
 } from '@angular/material';
@@ -26,6 +26,8 @@ import {DoctorComponent} from '../../view/doctor/doctor.component';
 import {PanelHeadComponent} from '../../view/panel-head/panel-head.component';
 import {SavemodalComponent} from '../../view/doctor/savemodal/savemodal.component';
 import {AmazingTimePickerModule} from 'amazing-time-picker';
+import {LoadingComponent} from '../../view/loading/loading.component';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({
@@ -46,7 +48,10 @@ import {AmazingTimePickerModule} from 'amazing-time-picker';
     MatCheckboxModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    AmazingTimePickerModule
+    AmazingTimePickerModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    SweetAlert2Module
   ],
   entryComponents: [
     SavemodalComponent
@@ -60,7 +65,8 @@ import {AmazingTimePickerModule} from 'amazing-time-picker';
     UpgradeComponent,
     PanelHeadComponent,
     DoctorComponent,
-    SavemodalComponent
+    SavemodalComponent,
+    LoadingComponent
   ]
 })
 

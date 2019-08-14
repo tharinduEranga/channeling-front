@@ -16,6 +16,7 @@ export class DoctorComponent implements OnInit {
   doctors: DoctorDTO[] = [] ;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  isLoading: boolean;
 
   constructor(private doctorService: DoctorService, private dialog: MatDialog) {
   }
@@ -25,6 +26,7 @@ export class DoctorComponent implements OnInit {
   }
 
   public getAllDoctors() {
+    this.isLoading = true;
     this.doctorService.getAll().subscribe( value => {
       // @ts-ignore
       this.doctors = value.body;
@@ -56,8 +58,7 @@ export class DoctorComponent implements OnInit {
         const transformedFilter = filter.trim().toLowerCase();
         return dataStr.indexOf(transformedFilter) !== -1;
       };
-    }, error => {
-      console.log(error);
+      this.isLoading = false;
     });
   }
 
@@ -82,5 +83,8 @@ export class DoctorComponent implements OnInit {
       this.doctorService.setdoctor(undefined);
       this.getAllDoctors();
     });
+  }
+
+  tableDelete(row) {
   }
 }
