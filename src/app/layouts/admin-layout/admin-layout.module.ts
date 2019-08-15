@@ -30,6 +30,8 @@ import {LoadingComponent} from '../../view/loading/loading.component';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {OtherComponent} from '../../view/other/other.component';
 import {SaveComponent} from '../../view/other/save/save.component';
+import {LoginComponent} from '../../login/login.component';
+import {MedicineComponent} from '../../view/medicine/medicine.component';
 
 
 @NgModule({
@@ -71,7 +73,8 @@ import {SaveComponent} from '../../view/other/save/save.component';
     SavemodalComponent,
     LoadingComponent,
     OtherComponent,
-    SaveComponent
+    SaveComponent,
+    MedicineComponent
   ]
 })
 

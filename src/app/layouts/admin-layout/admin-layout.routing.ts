@@ -9,6 +9,7 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {DoctorComponent} from '../../view/doctor/doctor.component';
 import {OtherComponent} from '../../view/other/other.component';
+import {MedicineComponent} from '../../view/medicine/medicine.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: HomeComponent },
@@ -19,5 +20,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'doctors',        component: DoctorComponent },
     { path: 'other',          component: OtherComponent },
-
+    { path: 'medicine',       component: MedicineComponent }
 ];
