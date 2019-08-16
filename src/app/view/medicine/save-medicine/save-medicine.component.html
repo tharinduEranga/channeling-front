@@ -1,0 +1,48 @@
+<div style="width: 50vw; height: 75vh" class="container">
+    <h2 mat-dialog-title>Save a new Doctor</h2>
+    <mat-dialog-content class="mat-typography">
+        <h3>Please insert relevant data in below form</h3>
+        <!--<mat-dialog-actions>-->
+        <div class="row">
+
+            <div class="example-container col-md-12">
+                <mat-form-field>
+                    <input [(ngModel)]="medicine.medicineName" matInput placeholder="Name" name="medicineName">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <textarea [(ngModel)]="medicine.price" matInput placeholder="Price" name="price"></textarea>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input [(ngModel)]="medicine.qty" matInput placeholder="QTY" name="qty">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="Brand" aria-label="Number" matInput
+                           [formControl]="myControlBrand"
+                           [matAutocomplete]="autoBrand">
+                    <mat-autocomplete autoActiveFirstOption #autoBrand="matAutocomplete"
+                                      [displayWith]="displayFnBrand">
+                        <mat-option *ngFor="let brand of filteredBrands | async;" [value]="brand"
+                                    (onSelectionChange)="setBrand(brand)">
+                            {{brand.brandName}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+            </div>
+
+            <div class="container-fluid">
+                <button mat-button mat-dialog-close class="btn btn-danger col-md-5 col-sm-12">Cancel</button>
+                <div class="col-md-2 col-sm-0"></div>
+                <button mat-button  class="btn btn-success col-md-5 col-sm-12"
+                        (click)="saveMedicine()">Save
+                </button>
+            </div>
+
+        </div>
+        <!--</mat-dialog-actions>-->
+
+    </mat-dialog-content>
+</div>

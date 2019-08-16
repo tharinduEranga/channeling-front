@@ -4,13 +4,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header" style="text-align: center">
-                        <h4 class="title">View all Medicines</h4>
+                        <h4 class="title">View all Medicine</h4>
                         <p class="category">You can manage medicine and brand data here</p>
                     </div><hr>
                     <div class="row">
 
                         <!--Medicine area-->
-                        <div class="col-md-8 col-sm-12 ">
+                        <div class="col-md-7 col-sm-12 ">
                             <div class="content">
                                 <app-loading *ngIf="isLoading"></app-loading>
                                 <div [hidden]="isLoading">
@@ -75,7 +75,7 @@
                         </div>
 
                         <!--Brands area-->
-                        <div class="col-md-4 col-sm-12 ">
+                        <div class="col-md-5 col-sm-12 ">
                             <div class="content">
                                 <div [hidden]="isLoading">
                                     <div class="row">

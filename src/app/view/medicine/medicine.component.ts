@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import Swal from 'sweetalert2';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {MedicineDTO} from '../../dto/medicineDTO';
 import {MedicineService} from '../../services/medicine.service';
 import {BrandService} from '../../services/brand.service';
+import {SaveMedicineComponent} from './save-medicine/save-medicine.component';
 
 @Component({
   selector: 'app-medicine',
@@ -28,7 +29,7 @@ export class MedicineComponent implements OnInit {
 
   isLoading: boolean;
 
-  constructor(private medicineService: MedicineService, private brandService: BrandService) { }
+  constructor(private medicineService: MedicineService, private brandService: BrandService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getAllMedicine();
@@ -92,7 +93,9 @@ export class MedicineComponent implements OnInit {
   }
 
   addNewClick() {
-    Swal.fire('add', 'clicked', 'success');
+    this.medicineService.setIsUpdate(false);
+    this.medicineService.setMedicine(undefined);
+    this.openAddMedDialog();
   }
 
   applyMedFilter(filterValue: string) {
@@ -112,7 +115,9 @@ export class MedicineComponent implements OnInit {
   }
 
   tableClick(row: any) {
-    Swal.fire('tbl', 'edit', 'success');
+    this.medicineService.setMedicine(row);
+    this.medicineService.setIsUpdate(true);
+    this.openAddMedDialog();
   }
 
   tableDelete(row: any) {
@@ -129,4 +134,10 @@ export class MedicineComponent implements OnInit {
   brandTblEditClick(row: any) {
   }
 
+  private openAddMedDialog() {
+    this.dialog.open(SaveMedicineComponent).afterClosed().subscribe(value => {
+      this.medicineService.setMedicine(undefined);
+      this.getAllMedicine();
+    });
+  }
 }
