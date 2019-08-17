@@ -33,6 +33,7 @@ import {SaveComponent} from '../../view/other/save/save.component';
 import {LoginComponent} from '../../login/login.component';
 import {MedicineComponent} from '../../view/medicine/medicine.component';
 import {SaveMedicineComponent} from '../../view/medicine/save-medicine/save-medicine.component';
+import {SaveBrandComponent} from '../../view/medicine/save-brand/save-brand.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import {SaveMedicineComponent} from '../../view/medicine/save-medicine/save-medi
   entryComponents: [
     SavemodalComponent,
     SaveComponent,
-    SaveMedicineComponent
+    SaveMedicineComponent,
+    SaveBrandComponent
   ],
   declarations: [
     HomeComponent,
@@ -77,7 +79,8 @@ import {SaveMedicineComponent} from '../../view/medicine/save-medicine/save-medi
     OtherComponent,
     SaveComponent,
     MedicineComponent,
-    SaveMedicineComponent
+    SaveMedicineComponent,
+    SaveBrandComponent
   ]
 })
 

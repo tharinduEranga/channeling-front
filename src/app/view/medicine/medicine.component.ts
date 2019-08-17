@@ -5,6 +5,7 @@ import {MedicineDTO} from '../../dto/medicineDTO';
 import {MedicineService} from '../../services/medicine.service';
 import {BrandService} from '../../services/brand.service';
 import {SaveMedicineComponent} from './save-medicine/save-medicine.component';
+import {SaveBrandComponent} from './save-brand/save-brand.component';
 
 @Component({
   selector: 'app-medicine',
@@ -125,13 +126,18 @@ export class MedicineComponent implements OnInit {
   }
 
   addNewBrand() {
-    Swal.fire('btn', 'brand', 'success');
+    this.brandService.setBrand(undefined);
+    this.brandService.setIsUpdate(false);
+    this.openAddBrandDialog();
   }
 
   brandTblDeleteClick(row: any) {
   }
 
   brandTblEditClick(row: any) {
+    this.brandService.setBrand(row);
+    this.brandService.setIsUpdate(true);
+    this.openAddBrandDialog();
   }
 
   private openAddMedDialog() {
@@ -140,4 +146,11 @@ export class MedicineComponent implements OnInit {
       this.getAllMedicine();
     });
   }
+  private openAddBrandDialog() {
+    this.dialog.open(SaveBrandComponent).afterClosed().subscribe(value => {
+      this.brandService.setBrand(undefined);
+      this.getAllBrands();
+    });
+  }
 }
+
