@@ -30,10 +30,12 @@ import {LoadingComponent} from '../../view/loading/loading.component';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {OtherComponent} from '../../view/other/other.component';
 import {SaveComponent} from '../../view/other/save/save.component';
-import {LoginComponent} from '../../login/login.component';
 import {MedicineComponent} from '../../view/medicine/medicine.component';
 import {SaveMedicineComponent} from '../../view/medicine/save-medicine/save-medicine.component';
 import {SaveBrandComponent} from '../../view/medicine/save-brand/save-brand.component';
+import {AppointmentsComponent} from '../../view/appointments/appointments.component';
+import {PatientsComponent} from '../../view/patients/patients.component';
+import {SavePatientComponent} from '../../view/patients/save-patient/save-patient.component';
 
 
 @NgModule({
@@ -63,7 +65,8 @@ import {SaveBrandComponent} from '../../view/medicine/save-brand/save-brand.comp
     SavemodalComponent,
     SaveComponent,
     SaveMedicineComponent,
-    SaveBrandComponent
+    SaveBrandComponent,
+    SavePatientComponent
   ],
   declarations: [
     HomeComponent,
@@ -80,7 +83,10 @@ import {SaveBrandComponent} from '../../view/medicine/save-brand/save-brand.comp
     SaveComponent,
     MedicineComponent,
     SaveMedicineComponent,
-    SaveBrandComponent
+    SaveBrandComponent,
+    AppointmentsComponent,
+    PatientsComponent,
+    SavePatientComponent
   ]
 })
 

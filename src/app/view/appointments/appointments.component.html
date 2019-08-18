@@ -1,0 +1,78 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header" style="text-align: center">
+                        <h4 class="title">Make an appointment</h4>
+                        <p class="category">Manage all appointments or add new</p>
+                    </div>
+                    <div class="content">
+                        <app-loading *ngIf="isLoading"></app-loading>
+                        <div [hidden]="isLoading">
+                            <div class="row">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2">
+                                    <button mat-button (click)="addNewClick()" class="btn btn-default">Add new</button>
+                                </div>
+                            </div>
+                            <!--table-->
+                            <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                            </mat-form-field>
+
+                            <div class="mat-elevation-z8">
+                                <table mat-table [dataSource]="dataSource" matSort class="table table-hover">
+
+                                    <ng-container matColumnDef="name">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+                                        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="address">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Address</th>
+                                        <td mat-cell *matCellDef="let row"> {{row.address}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="tel">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Telephone</th>
+                                        <td mat-cell *matCellDef="let row"> {{row.tel}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="hospital">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hospital</th>
+                                        <td mat-cell *matCellDef="let row"> {{row.hospital.hospitalName}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="speciality">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Speciality</th>
+                                        <td mat-cell *matCellDef="let row"> {{row.speciality.specialityName}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="actions" class="row">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 5vw">
+                                            Actions
+                                        </th>
+                                        <mat-cell *matCellDef="let row" class="col-md-12">
+                                            <button mat-button class="btn btn-primary table-btn"
+                                                    (click)="tableClick(row)">Edit
+                                            </button>
+                                            <label style="color: white"> |||| </label>
+                                            <button mat-button class="btn btn-danger table-btn" (click)="tableDelete(row)">Delete</button>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                    </tr>
+                                </table>
+
+                                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

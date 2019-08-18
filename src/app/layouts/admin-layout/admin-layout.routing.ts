@@ -10,10 +10,11 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {DoctorComponent} from '../../view/doctor/doctor.component';
 import {OtherComponent} from '../../view/other/other.component';
 import {MedicineComponent} from '../../view/medicine/medicine.component';
+import {PatientsComponent} from '../../view/patients/patients.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: HomeComponent },
-    { path: 'table',          component: TablesComponent },
+    { path: 'patients',       component: PatientsComponent },
     { path: 'typography',     component: TypographyComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'notifications',  component: NotificationsComponent },

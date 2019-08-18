@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ErrorHandler, NgModule} from '@angular/core';
 // @ts-ignore
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 // @ts-ignore
 import { RouterModule } from '@angular/router';
 
@@ -18,6 +18,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LoginComponent } from './login/login.component';
 import {ErrorHandleChennel} from './util/ErrorHandleChennel';
+import {TokenInterceptor} from './auth/TokenInterceptor';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {ErrorHandleChennel} from './util/ErrorHandleChennel';
     LoginComponent
   ],
   providers: [
-    {provide: ErrorHandler, useClass: ErrorHandleChennel}
+    {provide: ErrorHandler, useClass: ErrorHandleChennel},
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

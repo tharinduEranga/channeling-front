@@ -1,0 +1,38 @@
+<div style="width: 50vw; height: 55vh" class="container">
+    <h2 mat-dialog-title>Save a new Patient</h2>
+    <mat-dialog-content class="mat-typography">
+        <h3>Please insert relevant data in below form</h3>
+        <!--<mat-dialog-actions>-->
+        <div class="row">
+            <br>
+            <div class="example-container col-md-12">
+                
+                <mat-form-field class="col-md-12" >
+                    <input [(ngModel)]="patient.name" matInput placeholder="Patient Name" name="name">
+                </mat-form-field>
+
+                <mat-form-field class="col-md-12" >
+                    <input [(ngModel)]="patient.age" matInput placeholder="Age" name="age">
+                </mat-form-field>
+
+                <mat-form-field class="col-md-12" >
+                    <input [(ngModel)]="patient.tel" matInput placeholder="Tel" name="tel">
+                </mat-form-field>
+
+                <mat-form-field class="col-md-12" >
+                    <input [(ngModel)]="patient.address" matInput placeholder="Address" name="address">
+                </mat-form-field>
+                
+            </div>
+
+            <div class="container-fluid">
+                <button mat-button mat-dialog-close class="btn btn-danger col-md-5 col-sm-12">Cancel</button>
+                <div class="col-md-2 col-sm-0"></div>
+                <button mat-button  class="btn btn-success col-md-5 col-sm-12"
+                        (click)="saveData()">Save
+                </button>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+</div>

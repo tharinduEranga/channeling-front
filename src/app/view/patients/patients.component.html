@@ -1,0 +1,83 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header" style="text-align: center">
+                        <h4 class="title">View all Patients</h4>
+                        <p class="category">You can also manage data of patients in here</p>
+                    </div>
+                    <div class="row">
+
+                        <!--Hospital content-->
+                        <div class="col-md-12 col-sm-12">
+                            <div class="content">
+                                <app-loading *ngIf="isLoading"></app-loading>
+                                <div [hidden]="isLoading">
+                                    <div class="row">
+                                        <h3>Patients</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10"></div>
+                                        <div class="col-md-2">
+                                            <button mat-button (click)="addNewPatients()" class="btn btn-default">Add new</button>
+                                        </div>
+                                    </div>
+                                    <!--table-->
+                                    <mat-form-field>
+                                        <input matInput (keyup)="applyPatientFilter($event.target.value)" placeholder="Filter">
+                                    </mat-form-field>
+
+                                    <div class="mat-elevation-z8">
+                                        <table mat-table [dataSource]="patientDataSource" matSort #patientSort='matSort' class="table table-hover">
+
+                                            <ng-container matColumnDef="name">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+                                                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="age">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Age</th>
+                                                <td mat-cell *matCellDef="let row"> {{row.age}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="tel">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Tel</th>
+                                                <td mat-cell *matCellDef="let row"> {{row.tel}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="address">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Address</th>
+                                                <td mat-cell *matCellDef="let row"> {{row.address}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="actions">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 5vw">
+                                                    Actions
+                                                </th>
+                                                <mat-cell *matCellDef="let row">
+                                                    <button mat-button class="btn btn-primary table-btn"
+                                                            (click)="patientTblEditClick(row)">Edit
+                                                    </button>
+                                                    <label style="color: white"> |||| </label>
+                                                    <button mat-button class="btn btn-danger table-btn" (click)="patientTblDeleteClick(row)">Delete</button>
+                                                </mat-cell>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="columnsOfPatients"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: columnsOfPatients;">
+                                            </tr>
+                                        </table>
+
+                                        <mat-paginator #patientPaginator='matPaginator' [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
