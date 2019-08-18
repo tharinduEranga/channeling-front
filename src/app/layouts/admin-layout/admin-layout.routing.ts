@@ -13,6 +13,11 @@ import {MedicineComponent} from '../../view/medicine/medicine.component';
 import {PatientsComponent} from '../../view/patients/patients.component';
 
 export const AdminLayoutRoutes: Routes = [
+    {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+    },
     { path: 'dashboard',      component: HomeComponent },
     { path: 'patients',       component: PatientsComponent },
     { path: 'typography',     component: TypographyComponent },

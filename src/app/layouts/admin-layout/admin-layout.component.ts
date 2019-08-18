@@ -1,8 +1,7 @@
-// @ts-ignore
+
 import { Component, OnInit} from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy, PopStateEvent } from '@angular/common';
+import { Location, PopStateEvent } from '@angular/common';
 import 'rxjs/add/operator/filter';
-// @ts-ignore
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -38,14 +37,16 @@ export class AdminLayoutComponent implements OnInit {
       });
        this.router.events.subscribe((event: any) => {
           if (event instanceof NavigationStart) {
-             if (event.url !== this.lastPoppedUrl)
+             if (event.url !== this.lastPoppedUrl) {
                  this.yScrollStack.push(window.scrollY);
+             }
          } else if (event instanceof NavigationEnd) {
              if (event.url === this.lastPoppedUrl) {
                  this.lastPoppedUrl = undefined;
                  window.scrollTo(0, this.yScrollStack.pop());
-             } else
+             } else {
                  window.scrollTo(0, 0);
+             }
          }
       });
       this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
