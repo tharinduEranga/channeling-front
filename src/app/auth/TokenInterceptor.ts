@@ -3,7 +3,7 @@ import {
     HttpRequest,
     HttpHandler,
     HttpEvent,
-    HttpInterceptor, HttpResponse, HttpErrorResponse
+    HttpInterceptor, HttpErrorResponse
 } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
@@ -29,6 +29,7 @@ export class TokenInterceptor implements HttpInterceptor {
         }).catch(err => {
             console.log(err);
             if (err instanceof HttpErrorResponse && err.status === 401) {
+                // this.tokenService.getAccessToken().subscribe(value => {localStorage.setItem('token',value.token});
                 const newReq = request.clone();
                 return next.handle(newReq).pipe(retry(3));
             }

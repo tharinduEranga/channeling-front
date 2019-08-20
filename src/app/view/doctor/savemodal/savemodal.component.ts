@@ -215,7 +215,7 @@ export class SavemodalComponent implements OnInit {
 
         const doctor = {
             doctorId: this.doctor.doctorId,
-            name: 'Dr. ' + this.doctor.name,
+            name: this.doctor.name,
             address: this.doctor.address,
             tel: this.doctor.tel,
             speciality: this.doctor.speciality,

@@ -11,7 +11,52 @@
                         <app-loading *ngIf="isLoading"></app-loading>
                         <div [hidden]="isLoading">
                             <div class="row">
-                                <div class="col-md-10"></div>
+                                <div class="col-md-5">
+
+                                    <mat-form-field class="example-full-width">
+                                        <input type="text" placeholder="Patient" aria-label="Number" matInput
+                                               [formControl]="myControlPatient"
+                                               [matAutocomplete]="autoPatient">
+                                        <mat-autocomplete autoActiveFirstOption #autoPatient="matAutocomplete"
+                                                          [displayWith]="displayFnPatient">
+                                            <mat-option *ngFor="let patient of filteredPatients | async;" [value]="patient"
+                                                        (onSelectionChange)="setPatient(patient)" (reset)="setPatient(patient)" >
+                                                {{patient.name}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input [(ngModel)]="patient.address" matInput placeholder="Address" name="address">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input [(ngModel)]="patient.age" matInput placeholder="Age" name="age">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input [(ngModel)]="patient.tel" matInput placeholder="Tel" name="tel">
+                                    </mat-form-field>
+
+
+                                </div>
+
+                                <div class="col-md-5">
+
+                                    <mat-form-field class="example-full-width">
+                                        <input type="text" placeholder="Doctor" aria-label="Number" matInput
+                                               [formControl]="myControlDoctor"
+                                               [matAutocomplete]="autoDoctor">
+                                        <mat-autocomplete autoActiveFirstOption #autoDoctor="matAutocomplete"
+                                                          [displayWith]="displayFnDoctor">
+                                            <mat-option *ngFor="let doctor of filteredDoctors | async;" [value]="doctor"
+                                                        (onSelectionChange)="setDoctor(doctor)">
+                                                {{doctor.name}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+
+                                </div>
                                 <div class="col-md-2">
                                     <button mat-button (click)="addNewClick()" class="btn btn-default">Add new</button>
                                 </div>

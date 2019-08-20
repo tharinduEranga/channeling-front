@@ -10,6 +10,7 @@ import {DoctorComponent} from '../../view/doctor/doctor.component';
 import {OtherComponent} from '../../view/other/other.component';
 import {MedicineComponent} from '../../view/medicine/medicine.component';
 import {PatientsComponent} from '../../view/patients/patients.component';
+import {AppointmentsComponent} from '../../view/appointments/appointments.component';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -21,7 +22,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'patients',       component: PatientsComponent },
     { path: 'typography',     component: TypographyComponent },
     { path: 'icons',          component: IconsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
+    { path: 'appointments',   component: AppointmentsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'doctors',        component: DoctorComponent },
     { path: 'other',          component: OtherComponent },
