@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {PatientService} from '../../services/patient.service';
 import {DoctorService} from '../../services/doctor.service';
 import {map, startWith} from 'rxjs/operators';
+import {AppointmentsService} from '../../services/appointments.service';
 
 @Component({
   selector: 'app-appointments',
@@ -13,7 +14,23 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./appointments.component.scss']
 })
 export class AppointmentsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'address', 'tel', 'hospital', 'speciality', 'actions'];
+
+  private appointment = {
+    appointmentId: 0,
+    date: '2019-08-19',
+    token_no: 0,
+    issue: 'Headache',
+    patient: {
+      patientId: 37,
+      patientName: null
+    },
+    doctor: {
+      doctorId: 14,
+      doctorName: null
+    }
+  };
+
+  displayedColumns: string[] = ['date', 'token_no', 'issue', 'patient', 'doctor', 'actions'];
   dataSource: MatTableDataSource<AppointmentsDTO>;
 
   appointments: AppointmentsDTO[] = [] ;
@@ -39,11 +56,13 @@ export class AppointmentsComponent implements OnInit {
   private myControlDoctor = new FormControl();
   private filteredDoctors: Observable<DoctorDTO[]>;
 
-  constructor(private patientService: PatientService, private doctorService: DoctorService) { }
+  constructor(private patientService: PatientService, private doctorService: DoctorService,
+              private appointmentsService: AppointmentsService) { }
 
   ngOnInit() {
     this.getAllPatients();
     this.getAllDoctors();
+    this.getAllAppointMents();
   }
 
   displayFnPatient(patient ?: PatientDTO): string | undefined {
@@ -114,8 +133,61 @@ export class AppointmentsComponent implements OnInit {
 
 
   addNewClick() {
-    Swal.fire('Click', 'add new', 'success');
+    console.log(this.appointment);
+    // this.appointmentsService.save(this.appointment).subscribe(value => {
+    //   if (value.success) {
+    //     Swal.fire('Done!', 'Appointment is Added!', 'success');
+    //   } else {
+    //     Swal.fire('Failed!', value.message, 'error');
+    //   }
+    // });
   }
 
 
+  tableClick(row) {
+
+  }
+
+  tableDelete(row) {
+  }
+
+  applyFilter(value: string) {
+  }
+
+  private getAllAppointMents() {
+    this.isLoading = true;
+    this.appointmentsService.getAll().subscribe( value => {
+      if (value.success) {
+        // @ts-ignore
+        this.appointments = value.body;
+        // Assign the data to the data source for the table to render
+        this.dataSource = new MatTableDataSource(this.appointments);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          if (property === 'patient') {
+            return item.patient.name;
+          } else {
+            return item[property];
+          }
+        };
+        this.dataSource.filterPredicate = (data, filter: string) => {
+          const accumulator = (currentTerm, key) => {
+            if (key === 'patient') {
+              return currentTerm + data.patient.name;
+            } else {
+              return currentTerm + data[key];
+            }
+          };
+          const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+          // Transform the filter by converting it to lowercase and removing whitespace.
+          const transformedFilter = filter.trim().toLowerCase();
+          return dataStr.indexOf(transformedFilter) !== -1;
+        };
+        this.isLoading = false;
+      } else {
+        Swal.fire('Error occured!', value.message, 'error');
+      }
+    });
+  }
 }
