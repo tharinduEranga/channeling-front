@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import Swal from 'sweetalert2';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {FormControl} from '@angular/forms';
+import {MatDatepickerInputEvent, MatOptionSelectionChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {FormControl, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {PatientService} from '../../services/patient.service';
 import {DoctorService} from '../../services/doctor.service';
@@ -17,16 +17,16 @@ export class AppointmentsComponent implements OnInit {
 
   private appointment = {
     appointmentId: 0,
-    date: '2019-08-19',
+    date: null,
     token_no: 0,
-    issue: 'Headache',
+    issue: null,
     patient: {
       patientId: 37,
-      patientName: null
+      name: null
     },
     doctor: {
       doctorId: 14,
-      doctorName: null
+      name: null
     }
   };
 
@@ -72,12 +72,18 @@ export class AppointmentsComponent implements OnInit {
     return doctor ? doctor.name : undefined;
   }
 
-  setPatient(patient: PatientDTO) {
-    console.log(patient);
-    this.patient = patient;
+  setPatient(event: MatOptionSelectionChange, patient: PatientDTO) {
+    if (event.source.selected) {
+      this.patient = patient;
+      this.appointment.patient = patient;
+    }
   }
-  setDoctor(doctor: DoctorDTO) {
-    this.doctor = doctor;
+
+  setDoctor(event: MatOptionSelectionChange, doctor: DoctorDTO) {
+    if (event.source.selected) {
+      this.doctor = doctor;
+      this.appointment.doctor = doctor;
+    }
   }
 
   private getAllPatients() {
@@ -134,13 +140,13 @@ export class AppointmentsComponent implements OnInit {
 
   addNewClick() {
     console.log(this.appointment);
-    // this.appointmentsService.save(this.appointment).subscribe(value => {
-    //   if (value.success) {
-    //     Swal.fire('Done!', 'Appointment is Added!', 'success');
-    //   } else {
-    //     Swal.fire('Failed!', value.message, 'error');
-    //   }
-    // });
+    this.appointmentsService.save(this.appointment).subscribe(value => {
+      if (value.success) {
+        Swal.fire('Appointment is Added!', 'Token no: ' + value.body.token_no, 'success');
+      } else {
+        Swal.fire('Failed!', value.message, 'error');
+      }
+    });
   }
 
 
@@ -189,5 +195,9 @@ export class AppointmentsComponent implements OnInit {
         Swal.fire('Error occured!', value.message, 'error');
       }
     });
+  }
+
+  setDate(event) {
+    this.appointment.date = event.targetElement.value;
   }
 }

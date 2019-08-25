@@ -20,7 +20,7 @@
                                         <mat-autocomplete autoActiveFirstOption #autoPatient="matAutocomplete"
                                                           [displayWith]="displayFnPatient">
                                             <mat-option *ngFor="let patient of filteredPatients | async;" [value]="patient"
-                                                        (onSelectionChange)="setPatient(patient)" (reset)="setPatient(patient)" >
+                                                        (onSelectionChange)="setPatient($event,patient)" (reset)="setPatient(patient)" >
                                                 {{patient.name}}
                                             </mat-option>
                                         </mat-autocomplete>
@@ -49,12 +49,24 @@
                                         <mat-autocomplete autoActiveFirstOption #autoDoctor="matAutocomplete"
                                                           [displayWith]="displayFnDoctor">
                                             <mat-option *ngFor="let doctor of filteredDoctors | async;" [value]="doctor"
-                                                        (onSelectionChange)="setDoctor(doctor)">
+                                                        (onSelectionChange)="setDoctor($event, doctor)">
                                                 {{doctor.name}}
                                             </mat-option>
                                         </mat-autocomplete>
                                     </mat-form-field>
 
+                                    <mat-form-field>
+                                        <input [(ngModel)]="appointment.issue" matInput placeholder="Issue" name="issue">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="Select Date" [matDatepicker]="datepickerRef"
+                                               name="datepicker" ngModel (dateChange)="setDate($event)"
+                                               #dateCtrl="ngModel" required readonly/>
+                                        <mat-datepicker-toggle [for]="datepickerRef" matSuffix></mat-datepicker-toggle>
+                                        <mat-datepicker #datepickerRef></mat-datepicker>
+                                        <mat-error >Choose a Date</mat-error>
+                                    </mat-form-field>
                                 </div>
 
                                 <div class="col-md-2">

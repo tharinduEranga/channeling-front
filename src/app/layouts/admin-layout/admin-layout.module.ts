@@ -12,11 +12,13 @@ import { IconsComponent } from '../../icons/icons.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
   MatAutocompleteModule,
-  MatCheckboxModule,
+  MatCheckboxModule, MatDatepickerModule,
   MatDialogModule,
   MatFormFieldModule,
-  MatInputModule,
+  MatInputModule, MatNativeDateModule,
   MatOptionModule,
   MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule,
   MatSortModule,
@@ -36,6 +38,7 @@ import {SaveBrandComponent} from '../../view/medicine/save-brand/save-brand.comp
 import {AppointmentsComponent} from '../../view/appointments/appointments.component';
 import {PatientsComponent} from '../../view/patients/patients.component';
 import {SavePatientComponent} from '../../view/patients/save-patient/save-patient.component';
+import {APP_DATE_FORMATS, Formatdatepicker} from '../../util/format- datepicker';
 
 
 @NgModule({
@@ -59,6 +62,8 @@ import {SavePatientComponent} from '../../view/patients/save-patient/save-patien
     AmazingTimePickerModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     SweetAlert2Module
   ],
   entryComponents: [
@@ -87,6 +92,10 @@ import {SavePatientComponent} from '../../view/patients/save-patient/save-patien
     AppointmentsComponent,
     PatientsComponent,
     SavePatientComponent
+  ],
+  providers: [
+    {provide: DateAdapter, useClass: Formatdatepicker},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
   ]
 })
 
