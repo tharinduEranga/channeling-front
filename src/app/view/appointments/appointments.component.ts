@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import Swal from 'sweetalert2';
-import {MatDatepickerInputEvent, MatOptionSelectionChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {FormControl, Validators} from '@angular/forms';
+import {MatOptionSelectionChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {PatientService} from '../../services/patient.service';
 import {DoctorService} from '../../services/doctor.service';
@@ -15,7 +15,7 @@ import {AppointmentsService} from '../../services/appointments.service';
 })
 export class AppointmentsComponent implements OnInit {
 
-  private appointment = {
+  private _appointment = {
     appointmentId: 0,
     date: null,
     token_no: 0,
@@ -30,12 +30,13 @@ export class AppointmentsComponent implements OnInit {
     }
   };
 
-  displayedColumns: string[] = ['date', 'token_no', 'issue', 'patient', 'doctor', 'actions'];
-  dataSource: MatTableDataSource<AppointmentsDTO>;
+  private _displayedAppointColumns: string[] = ['date', 'token_no', 'issue', 'patient', 'doctor', 'actions'];
+  private _appointment_dataSource: MatTableDataSource<AppointmentsDTO>;
 
-  appointments: AppointmentsDTO[] = [] ;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  private _appointments: AppointmentsDTO[] = [] ;
+  @ViewChild('appointPaginator', {static: true}) appointPaginator: MatPaginator;
+  @ViewChild('appointSort', {static: true}) appointSort: MatSort;
+
   isLoading: boolean;
 
   private patient = {
@@ -45,16 +46,16 @@ export class AppointmentsComponent implements OnInit {
     tel: null,
     address: null
   };
-  private patientArray: PatientDTO[] = [];
+  private _patientArray: PatientDTO[] = [];
   private myControlPatient = new FormControl();
   private filteredPatients: Observable<PatientDTO[]>;
 
   private doctor = {
     doctorId: 0,
   };
-  private doctorArray: DoctorDTO[] = [];
-  private myControlDoctor = new FormControl();
-  private filteredDoctors: Observable<DoctorDTO[]>;
+  private _doctorArray: DoctorDTO[] = [];
+  myControlDoctor = new FormControl();
+  filteredDoctors: Observable<DoctorDTO[]>;
 
   constructor(private patientService: PatientService, private doctorService: DoctorService,
               private appointmentsService: AppointmentsService) { }
@@ -75,14 +76,14 @@ export class AppointmentsComponent implements OnInit {
   setPatient(event: MatOptionSelectionChange, patient: PatientDTO) {
     if (event.source.selected) {
       this.patient = patient;
-      this.appointment.patient = patient;
+      this._appointment.patient = patient;
     }
   }
 
   setDoctor(event: MatOptionSelectionChange, doctor: DoctorDTO) {
     if (event.source.selected) {
       this.doctor = doctor;
-      this.appointment.doctor = doctor;
+      this._appointment.doctor = doctor;
     }
   }
 
@@ -90,12 +91,12 @@ export class AppointmentsComponent implements OnInit {
     this.isLoading = true;
     this.patientService.getAll().subscribe(value => {
       if (value.success) {
-        this.patientArray = value.body;
+        this._patientArray = value.body;
         this.filteredPatients = this.myControlPatient.valueChanges
             .pipe(
                 startWith(''),
                 map(patient => typeof patient === 'string' ? patient : patient.name),
-                map(name => name ? this._filterPatient(name) : this.patientArray.slice())
+                map(name => name ? this._filterPatient(name) : this._patientArray.slice())
             );
         this.isLoading = false;
         this.myControlPatient.valueChanges.subscribe( values  => {
@@ -116,12 +117,12 @@ export class AppointmentsComponent implements OnInit {
     this.isLoading = true;
     this.doctorService.getAll().subscribe(value => {
       if (value.success) {
-        this.doctorArray = value.body;
+        this._doctorArray = value.body;
         this.filteredDoctors = this.myControlDoctor.valueChanges
             .pipe(
                 startWith(''),
                 map(doctor => typeof doctor === 'string' ? doctor : doctor.name),
-                map(name => name ? this._filterDoctor(name) : this.doctorArray.slice())
+                map(name => name ? this._filterDoctor(name) : this._doctorArray.slice())
             );
         this.isLoading = false;
       }
@@ -130,18 +131,19 @@ export class AppointmentsComponent implements OnInit {
 
   private _filterPatient(name: string): PatientDTO[] {
     const filterValue = name.toLowerCase();
-    return this.patientArray.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+    return this._patientArray.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
   private _filterDoctor(name: string): DoctorDTO[] {
     const filterValue = name.toLowerCase();
-    return this.doctorArray.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+    return this._doctorArray.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
 
   addNewClick() {
-    console.log(this.appointment);
-    this.appointmentsService.save(this.appointment).subscribe(value => {
+    console.log(this._appointment);
+    this.appointmentsService.save(this._appointment).subscribe(value => {
       if (value.success) {
+        this.getAllAppointMents();
         Swal.fire('Appointment is Added!', 'Token no: ' + value.body.token_no, 'success');
       } else {
         Swal.fire('Failed!', value.message, 'error');
@@ -150,14 +152,18 @@ export class AppointmentsComponent implements OnInit {
   }
 
 
-  tableClick(row) {
+  appointTableClick(row) {
 
   }
 
-  tableDelete(row) {
+  appointTableDelete(row) {
   }
 
-  applyFilter(value: string) {
+  applyAppointmentFilter(filterValue: string) {
+    this.appointment_dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.appointment_dataSource.paginator) {
+      this.appointment_dataSource.paginator.firstPage();
+    }
   }
 
   private getAllAppointMents() {
@@ -165,22 +171,26 @@ export class AppointmentsComponent implements OnInit {
     this.appointmentsService.getAll().subscribe( value => {
       if (value.success) {
         // @ts-ignore
-        this.appointments = value.body;
+        this._appointments = value.body;
         // Assign the data to the data source for the table to render
-        this.dataSource = new MatTableDataSource(this.appointments);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.dataSource.sortingDataAccessor = (item, property) => {
+        this._appointment_dataSource = new MatTableDataSource(this._appointments);
+        this._appointment_dataSource.paginator = this.appointPaginator;
+        this._appointment_dataSource.sort = this.appointSort;
+        this._appointment_dataSource.sortingDataAccessor = (item, property) => {
           if (property === 'patient') {
             return item.patient.name;
+          } else if (property === 'doctor') {
+            return item.doctor.name;
           } else {
             return item[property];
           }
         };
-        this.dataSource.filterPredicate = (data, filter: string) => {
+        this._appointment_dataSource.filterPredicate = (data, filter: string) => {
           const accumulator = (currentTerm, key) => {
             if (key === 'patient') {
               return currentTerm + data.patient.name;
+            } else if (key === 'doctor') {
+              return currentTerm + data.doctor.name;
             } else {
               return currentTerm + data[key];
             }
@@ -198,6 +208,64 @@ export class AppointmentsComponent implements OnInit {
   }
 
   setDate(event) {
-    this.appointment.date = event.targetElement.value;
+    this._appointment.date = event.targetElement.value;
   }
+
+  // =====================Getters and Setters==============================
+  get appointment(): {
+    date: null; doctor: { doctorId: number; name: null };
+    token_no: number; issue: null; appointmentId: number;
+    patient: { patientId: number; name: null }
+  } {
+    return this._appointment;
+  }
+
+  set appointment(value: { date: null;
+  doctor: { doctorId: number; name: null };
+  token_no: number; issue: null; appointmentId: number;
+  patient: { patientId: number; name: null } }) {
+    this._appointment = value;
+  }
+
+  get displayedAppointColumns(): string[] {
+    return this._displayedAppointColumns;
+  }
+
+  set displayedAppointColumns(value: string[]) {
+    this._displayedAppointColumns = value;
+  }
+
+  get appointment_dataSource(): MatTableDataSource<AppointmentsDTO> {
+    return this._appointment_dataSource;
+  }
+
+  set appointment_dataSource(value: MatTableDataSource<AppointmentsDTO>) {
+    this._appointment_dataSource = value;
+  }
+
+  get appointments(): AppointmentsDTO[] {
+    return this._appointments;
+  }
+
+  set appointments(value: AppointmentsDTO[]) {
+    this._appointments = value;
+  }
+
+  get patientArray(): PatientDTO[] {
+    return this._patientArray;
+  }
+
+  set patientArray(value: PatientDTO[]) {
+    this._patientArray = value;
+  }
+
+  get doctorArray(): DoctorDTO[] {
+    return this._doctorArray;
+  }
+
+  set doctorArray(value: DoctorDTO[]) {
+    this._doctorArray = value;
+  }
+  // =====================End of Getters and Setters==============================
+
 }

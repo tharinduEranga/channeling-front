@@ -75,11 +75,11 @@
                             </div>
                             <!--table-->
                             <mat-form-field>
-                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                <input matInput (keyup)="applyAppointmentFilter($event.target.value)" placeholder="Filter">
                             </mat-form-field>
 
                             <div class="mat-elevation-z8">
-                                <table mat-table [dataSource]="dataSource" matSort class="table table-hover">
+                                <table mat-table [dataSource]="appointment_dataSource" matSort #appointSort='matSort' class="table table-hover">
 
                                     <ng-container matColumnDef="date">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
@@ -112,19 +112,20 @@
                                         </th>
                                         <mat-cell *matCellDef="let row" class="col-md-12">
                                             <button mat-button class="btn btn-primary table-btn"
-                                                    (click)="tableClick(row)">Edit
+                                                    (click)="appointTableClick(row)">Edit
                                             </button>
                                             <label style="color: white"> |||| </label>
-                                            <button mat-button class="btn btn-danger table-btn" (click)="tableDelete(row)">Delete</button>
+                                            <button mat-button class="btn btn-danger table-btn"
+                                                    (click)="appointTableDelete(row)">Delete</button>
                                         </mat-cell>
                                     </ng-container>
 
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                    <tr mat-header-row *matHeaderRowDef="displayedAppointColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedAppointColumns;">
                                     </tr>
                                 </table>
 
-                                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                                <mat-paginator #appointPaginator='matPaginator' [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                             </div>
                         </div>
                     </div>
