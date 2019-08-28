@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
     {path: '/appointments', title: 'Appointments', icon: '../../assets/img/faces/patient.png', class: ''},
     {path: '/medicine', title: 'Medicine', icon: '../../assets/img/faces/patient.png', class: ''},
     {path: '/patients', title: 'Patients', icon: '../../assets/img/faces/patient.png', class: ''},
-    {path: '/icons', title: 'Payments', icon: '../../assets/img/faces/patient.png', class: ''},
+    {path: '/payments', title: 'Payments', icon: '../../assets/img/faces/patient.png', class: ''},
     {path: '/reports', title: 'Reports', icon: '../../assets/img/faces/patient.png', class: ''},
     {path: '/other', title: 'Other', icon: '../../assets/img/faces/patient.png', class: ''},
     {path: '/upgrade', title: 'Upgrade to PRO', icon: '../../assets/img/faces/patient.png', class: 'active-pro'},

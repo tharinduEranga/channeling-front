@@ -39,7 +39,7 @@ export class AppointmentsComponent implements OnInit {
 
   isLoading: boolean;
 
-  private patient = {
+  patient = {
     patientId: 0,
     name: null,
     age: null,
@@ -47,8 +47,8 @@ export class AppointmentsComponent implements OnInit {
     address: null
   };
   private _patientArray: PatientDTO[] = [];
-  private myControlPatient = new FormControl();
-  private filteredPatients: Observable<PatientDTO[]>;
+  myControlPatient = new FormControl();
+  filteredPatients: Observable<PatientDTO[]>;
 
   private doctor = {
     doctorId: 0,

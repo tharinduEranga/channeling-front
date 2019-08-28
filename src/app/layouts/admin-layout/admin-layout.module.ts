@@ -39,6 +39,7 @@ import {AppointmentsComponent} from '../../view/appointments/appointments.compon
 import {PatientsComponent} from '../../view/patients/patients.component';
 import {SavePatientComponent} from '../../view/patients/save-patient/save-patient.component';
 import {APP_DATE_FORMATS, Formatdatepicker} from '../../util/format- datepicker';
+import {PaymentsComponent} from '../../view/payments/payments.component';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import {APP_DATE_FORMATS, Formatdatepicker} from '../../util/format- datepicker'
     SaveBrandComponent,
     AppointmentsComponent,
     PatientsComponent,
-    SavePatientComponent
+    SavePatientComponent,
+    PaymentsComponent
   ],
   providers: [
     {provide: DateAdapter, useClass: Formatdatepicker},

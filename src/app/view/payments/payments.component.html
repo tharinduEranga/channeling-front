@@ -4,24 +4,16 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header" style="text-align: center">
-                        <h4 class="title">View all Medicine</h4>
-                        <p class="category">You can manage medicine and brand data here</p>
-                    </div><hr>
+                        <p class="category">Manage Payments</p>
+                    </div>
                     <div class="row">
 
                         <!--Medicine area-->
-                        <div class="col-md-7 col-sm-12 ">
+                        <div class="col-md-6 col-sm-8 ">
                             <div class="content">
                                 <app-loading *ngIf="isLoading"></app-loading>
                                 <div [hidden]="isLoading">
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <h5>Medicine</h5>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button mat-button (click)="addNewClick()" class="btn btn-default">Add new</button>
-                                        </div>
-                                    </div>
+
                                     <!--table-->
                                     <mat-form-field>
                                         <input matInput (keyup)="applyMedFilter($event.target.value)" placeholder="Filter">
@@ -50,19 +42,6 @@
                                                 <td mat-cell *matCellDef="let row"> {{row.brand.brandName}} </td>
                                             </ng-container>
 
-                                            <ng-container matColumnDef="medActions" class="row">
-                                                <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 5vw">
-                                                    Actions
-                                                </th>
-                                                <mat-cell *matCellDef="let row" class="col-md-12">
-                                                    <button mat-button class="btn btn-primary table-btn"
-                                                            (click)="tableClick(row)">Edit
-                                                    </button>
-                                                    <label style="color: white"> |||| </label>
-                                                    <button mat-button class="btn btn-danger table-btn" (click)="tableDelete(row)">Delete</button>
-                                                </mat-cell>
-                                            </ng-container>
-
                                             <tr mat-header-row *matHeaderRowDef="medicineColumns"></tr>
                                             <tr mat-row *matRowDef="let row; columns: medicineColumns;">
                                             </tr>
@@ -74,57 +53,67 @@
                             </div>
                         </div>
 
-                        <!--Brands area-->
-                        <div class="col-md-5 col-sm-12 ">
+                        <!--Payments area-->
+                        <div class="col-md-12 col-sm-12 ">
                             <div class="content">
                                 <div [hidden]="isLoading">
                                     <div class="row">
                                         <div class="row">
                                             <div class="col-md-8">
-                                                <h5>Brands</h5>
+                                                <h5>Payments</h5>
                                             </div>
                                             <div class="col-md-4">
-                                                <button mat-button (click)="addNewBrand()" class="btn btn-default">Add new</button>
+                                                <button mat-button (click)="addNewPayment()" class="btn btn-default">Add new</button>
                                             </div>
                                         </div>
                                     </div>
                                     <!--table-->
                                     <mat-form-field>
-                                        <input matInput (keyup)="applyBrandFilter($event.target.value)" placeholder="Filter">
+                                        <input matInput (keyup)="applyPaymentFilter($event.target.value)" placeholder="Filter">
                                     </mat-form-field>
 
                                     <div class="mat-elevation-z8">
-                                        <table mat-table [dataSource]="brandDataSource" matSort #brandSort='matSort' class="table table-hover">
+                                        <table mat-table [dataSource]="paymentDataSource" matSort #paymentSort='matSort' class="table table-hover">
 
-                                            <ng-container matColumnDef="brandId">
+                                            <ng-container matColumnDef="paymentId">
                                                 <th mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
-                                                <td mat-cell *matCellDef="let row"> {{row.brandId}} </td>
+                                                <td mat-cell *matCellDef="let row"> {{row.paymentId}} </td>
                                             </ng-container>
 
-                                            <ng-container matColumnDef="brandName">
-                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Brand</th>
-                                                <td mat-cell *matCellDef="let row"> {{row.brandName}} </td>
+                                            <ng-container matColumnDef="date">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
+                                                <td mat-cell *matCellDef="let row"> {{row.date}} </td>
                                             </ng-container>
 
-                                            <ng-container matColumnDef="brandActions">
+                                            <ng-container matColumnDef="amount">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount</th>
+                                                <td mat-cell *matCellDef="let row"> {{row.amount}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="patient">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient</th>
+                                                <td mat-cell *matCellDef="let row"> {{row.patient.name}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="paymentActions">
                                                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 5vw">
                                                     Actions
                                                 </th>
                                                 <mat-cell *matCellDef="let row">
                                                     <button mat-button class="btn btn-primary table-btn"
-                                                            (click)="brandTblEditClick(row)">Edit
+                                                            (click)="paymentTblEditClick(row)">Edit
                                                     </button>
                                                     <label style="color: white"> |||| </label>
-                                                    <button mat-button class="btn btn-danger table-btn" (click)="brandTblDeleteClick(row)">Delete</button>
+                                                    <button mat-button class="btn btn-danger table-btn" (click)="paymentTblDeleteClick(row)">Delete</button>
                                                 </mat-cell>
                                             </ng-container>
 
-                                            <tr mat-header-row *matHeaderRowDef="brandColumns"></tr>
-                                            <tr mat-row *matRowDef="let row; columns: brandColumns;">
+                                            <tr mat-header-row *matHeaderRowDef="paymentColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: paymentColumns;">
                                             </tr>
                                         </table>
 
-                                        <mat-paginator #brandPaginator='matPaginator' [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                                        <mat-paginator #paymentPaginator='matPaginator' [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                                     </div>
                                 </div>
                             </div>

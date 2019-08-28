@@ -11,6 +11,7 @@ import {OtherComponent} from '../../view/other/other.component';
 import {MedicineComponent} from '../../view/medicine/medicine.component';
 import {PatientsComponent} from '../../view/patients/patients.component';
 import {AppointmentsComponent} from '../../view/appointments/appointments.component';
+import {PaymentsComponent} from '../../view/payments/payments.component';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -26,5 +27,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'doctors',        component: DoctorComponent },
     { path: 'other',          component: OtherComponent },
-    { path: 'medicine',       component: MedicineComponent }
+    { path: 'medicine',       component: MedicineComponent },
+    { path: 'payments',       component: PaymentsComponent }
 ];

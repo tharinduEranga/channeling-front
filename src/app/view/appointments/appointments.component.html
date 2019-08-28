@@ -20,7 +20,7 @@
                                         <mat-autocomplete autoActiveFirstOption #autoPatient="matAutocomplete"
                                                           [displayWith]="displayFnPatient">
                                             <mat-option *ngFor="let patient of filteredPatients | async;" [value]="patient"
-                                                        (onSelectionChange)="setPatient($event,patient)" (reset)="setPatient(patient)" >
+                                                        (onSelectionChange)="setPatient($event,patient)">
                                                 {{patient.name}}
                                             </mat-option>
                                         </mat-autocomplete>
