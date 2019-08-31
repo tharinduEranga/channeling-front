@@ -1,10 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PaymentService} from '../../services/payment.service';
 import Swal from 'sweetalert2';
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatOptionSelectionChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {MedicineDTO} from '../../dto/medicineDTO';
 import {MedicineService} from '../../services/medicine.service';
 import {SaveMedicineComponent} from '../medicine/save-medicine/save-medicine.component';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {PatientService} from '../../services/patient.service';
 
 @Component({
   selector: 'app-payments',
@@ -13,7 +17,20 @@ import {SaveMedicineComponent} from '../medicine/save-medicine/save-medicine.com
 })
 export class PaymentsComponent implements OnInit {
 
-  medicineColumns: string[] = ['medicineName', 'price', 'qty', 'brand'];
+  payment = {
+    paymentId: 0,
+    amount: 0,
+    patient: {
+      patientId: 0
+    },
+    paymentMedDTOS: [{
+      medicineId: 0,
+      qty: 0,
+      amount: 0
+    }]
+  };
+
+  medicineColumns: string[] = ['medicineName', 'price', 'qty', 'brand', 'medicineAction'];
   paymentColumns: string[] = ['paymentId', 'date', 'amount', 'patient'];
 
   medDataSource: MatTableDataSource<MedicineDTO>;
@@ -21,6 +38,14 @@ export class PaymentsComponent implements OnInit {
 
   medicine: MedicineDTO[] = [] ;
   payments: PaymentsDTO[] = [] ;
+
+  payMedDetails = [];
+
+  selectedMedicine = {
+    medicineId: 0,
+    qty: 0,
+    amount: 0
+  };
 
   @ViewChild('medPaginator', {static: true}) medPaginator: MatPaginator;
   @ViewChild('medSort', {static: true}) medSort: MatSort;
@@ -30,11 +55,17 @@ export class PaymentsComponent implements OnInit {
 
   isLoading: boolean;
 
-  constructor(private medicineService: MedicineService, private paymentService: PaymentService, private dialog: MatDialog) { }
+  private _patientArray: PatientDTO[] = [];
+  myControlPatient = new FormControl();
+  filteredPatients: Observable<PatientDTO[]>;
+
+  constructor(private medicineService: MedicineService, private paymentService: PaymentService,
+              private patientService: PatientService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getAllMedicine();
-    this.getAllPayments();
+    // this.getAllPayments();
+    this.getAllPatients();
   }
 
   getAllMedicine() {
@@ -137,12 +168,6 @@ export class PaymentsComponent implements OnInit {
     }
   }
 
-  addNewPayment() {
-    // this.paymentService.setPayment(undefined);
-    // this.paymentService.setIsUpdate(false);
-    this.openAddPaymentDialog();
-  }
-
   paymentTblDeleteClick(row: any) {
   }
 
@@ -165,4 +190,56 @@ export class PaymentsComponent implements OnInit {
     // });
   }
 
+  medicineSelected(row: any) {
+    this.selectedMedicine = row;
+    this.selectedMedicine.amount = row.price;
+  }
+
+  displayFnPatient(patient ?: PatientDTO): string | undefined {
+    return patient ? patient.name : undefined;
+  }
+
+  private _filterPatient(name: string): PatientDTO[] {
+    const filterValue = name.toLowerCase();
+    return this._patientArray.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  private getAllPatients() {
+    this.isLoading = true;
+    this.patientService.getAll().subscribe(value => {
+      if (value.success) {
+        this._patientArray = value.body;
+        this.filteredPatients = this.myControlPatient.valueChanges
+            .pipe(
+                startWith(''),
+                map(patient => typeof patient === 'string' ? patient : patient.name),
+                map(name => name ? this._filterPatient(name) : this._patientArray.slice())
+            );
+        this.isLoading = false;
+        this.myControlPatient.valueChanges.subscribe( values  => {
+          if (!this.myControlPatient.value) {
+            this.payment.patient = {
+              patientId: 0
+            };
+          }
+        });
+      }
+    });
+  }
+
+  setPatient($event: MatOptionSelectionChange, patient: PatientDTO) {
+    this.payment.patient = patient;
+  }
+
+  addPayMedDetail() {
+    this.payMedDetails.push(this.selectedMedicine);
+  }
+
+  addNewPayment() {
+    // this.paymentService.setPayment(undefined);
+    // this.paymentService.setIsUpdate(false);
+    this.payment.paymentMedDTOS = this.payMedDetails;
+    console.log(this.payment);
+    this.openAddPaymentDialog();
+  }
 }
