@@ -30,6 +30,7 @@ export class SavemodalComponent implements OnInit {
         },
         daysDTOs: [],
         adminDTO: {
+            adminId: 0,
             userName: null,
             password: null
         }
@@ -144,7 +145,6 @@ export class SavemodalComponent implements OnInit {
     }
 
     saveDoctor() {
-        console.log(this.monfrom + ':00');
         const docDays = [];
         if (this.isMonday) {
             docDays.push({
@@ -222,6 +222,7 @@ export class SavemodalComponent implements OnInit {
             hospital: this.doctor.hospital,
             daysDTOs: docDays,
             adminDTO: {
+                adminId: this.doctor.adminDTO.adminId,
                 userName: this.doctor.adminDTO.userName,
                 password: this.doctor.adminDTO.password
             }
@@ -256,6 +257,7 @@ export class SavemodalComponent implements OnInit {
             // runs following if condition if the adminDto is null as is may cause exceptions in dom
             if (this.doctor.adminDTO === null || this.doctor.adminDTO === undefined) {
                 this.doctor.adminDTO = {
+                    adminId: 0,
                     userName: '',
                     password: ''
                 };
