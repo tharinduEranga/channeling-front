@@ -31,18 +31,20 @@ export class PaymentsComponent implements OnInit {
   };
 
   medicineColumns: string[] = ['medicineName', 'price', 'qty', 'brand', 'medicineAction'];
-  paymentColumns: string[] = ['paymentId', 'date', 'amount', 'patient'];
+  newPaymentColumns: string[] = ['medicineName', 'price', 'qty', 'newPaymentActions'];
 
   medDataSource: MatTableDataSource<MedicineDTO>;
-  paymentDataSource: MatTableDataSource<PaymentsDTO>;
+  newPaymentDataSource: MatTableDataSource<PayMedDTO>;
 
   medicine: MedicineDTO[] = [] ;
   payments: PaymentsDTO[] = [] ;
+  payMeds: PayMedDTO[] = [];
 
   payMedDetails = [];
 
   selectedMedicine = {
     medicineId: 0,
+    medicineName: null,
     qty: 0,
     amount: 0
   };
@@ -50,8 +52,8 @@ export class PaymentsComponent implements OnInit {
   @ViewChild('medPaginator', {static: true}) medPaginator: MatPaginator;
   @ViewChild('medSort', {static: true}) medSort: MatSort;
 
-  @ViewChild('paymentPaginator', {static: true}) paymentPaginator: MatPaginator;
-  @ViewChild('paymentSort', {static: true}) paymentSort: MatSort;
+  @ViewChild('newPaymentPaginator', {static: true}) newPaymentPaginator: MatPaginator;
+  @ViewChild('newPaymentSort', {static: true}) newPaymentSort: MatSort;
 
   isLoading: boolean;
 
@@ -107,43 +109,43 @@ export class PaymentsComponent implements OnInit {
   }
 
   getAllPayments() {
-    this.isLoading = true;
-    this.paymentService.getAll().subscribe( value => {
-      // @ts-ignore
-      if (value.success) {
-        this.payments = value.body;
-        // Assign the data to the data source for the table to render
-        this.paymentDataSource = new MatTableDataSource(this.payments);
-        this.paymentDataSource.paginator = this.paymentPaginator;
-        this.paymentDataSource.sort = this.paymentSort;
-
-        this.paymentDataSource.sortingDataAccessor = (item, property) => {
-          if (property === 'patient') {
-            return item.patient.name;
-          } else {
-            return item[property];
-          }
-        };
-        this.paymentDataSource.filterPredicate = (data, filter: string)  => {
-          const accumulator = (currentTerm, key) => {
-            if (key === 'patient') {
-              return currentTerm + data.patient.name;
-            }  else {
-              return currentTerm + data[key];
-            }
-          };
-          const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-          // Transform the filter by converting it to lowercase and removing whitespace.
-          const transformedFilter = filter.trim().toLowerCase();
-          return dataStr.indexOf(transformedFilter) !== -1;
-        };
-
-      } else {
-        Swal.fire('Error occured!', value.message, 'error');
-      }
-
-      this.isLoading = false;
-    });
+    // this.isLoading = true;
+    // this.paymentService.getAll().subscribe( value => {
+    //   // @ts-ignore
+    //   if (value.success) {
+    //     this.payments = value.body;
+    //     // Assign the data to the data source for the table to render
+    //     this.newPaymentDataSource = new MatTableDataSource(this.payment);
+    //     this.newPaymentDataSource.paginator = this.newPaymentPaginator;
+    //     this.newPaymentDataSource.sort = this.newPaymentSort;
+    //
+    //     this.newPaymentDataSource.sortingDataAccessor = (item, property) => {
+    //       if (property === 'patient') {
+    //         return item.patient.name;
+    //       } else {
+    //         return item[property];
+    //       }
+    //     };
+    //     this.newPaymentDataSource.filterPredicate = (data, filter: string)  => {
+    //       const accumulator = (currentTerm, key) => {
+    //         if (key === 'patient') {
+    //           return currentTerm + data.patient.name;
+    //         }  else {
+    //           return currentTerm + data[key];
+    //         }
+    //       };
+    //       const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+    //       // Transform the filter by converting it to lowercase and removing whitespace.
+    //       const transformedFilter = filter.trim().toLowerCase();
+    //       return dataStr.indexOf(transformedFilter) !== -1;
+    //     };
+    //
+    //   } else {
+    //     Swal.fire('Error occured!', value.message, 'error');
+    //   }
+    //
+    //   this.isLoading = false;
+    // });
   }
 
   addNewClick() {
@@ -160,11 +162,11 @@ export class PaymentsComponent implements OnInit {
     }
   }
 
-  applyPaymentFilter(filterValue: string) {
-    this.paymentDataSource.filter = filterValue.trim().toLowerCase();
+  applyNewFilter(filterValue: string) {
+    this.newPaymentDataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.paymentDataSource.paginator) {
-      this.paymentDataSource.paginator.firstPage();
+    if (this.newPaymentDataSource.paginator) {
+      this.newPaymentDataSource.paginator.firstPage();
     }
   }
 
@@ -233,6 +235,12 @@ export class PaymentsComponent implements OnInit {
 
   addPayMedDetail() {
     this.payMedDetails.push(this.selectedMedicine);
+    this.payment.amount = this.payment.amount + (this.selectedMedicine.amount * this.selectedMedicine.qty);
+
+    this.payMeds = this.payMedDetails;
+    this.newPaymentDataSource = new MatTableDataSource(this.payMeds);
+    this.newPaymentDataSource.paginator = this.newPaymentPaginator;
+    this.newPaymentDataSource.sort = this.newPaymentSort;
   }
 
   addNewPayment() {
@@ -240,6 +248,14 @@ export class PaymentsComponent implements OnInit {
     // this.paymentService.setIsUpdate(false);
     this.payment.paymentMedDTOS = this.payMedDetails;
     console.log(this.payment);
-    this.openAddPaymentDialog();
+    this.paymentService.save(this.payment).subscribe(value => {
+      if (value.success) {
+        Swal.fire('Done!', 'Added new payment!', 'success');
+        this.dialog.closeAll();
+      } else {
+        Swal.fire('Failed!', value.message, 'error');
+      }
+    })
+    // this.openAddPaymentDialog();
   }
 }
