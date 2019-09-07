@@ -42,6 +42,7 @@ import {APP_DATE_FORMATS, Formatdatepicker} from '../../util/format- datepicker'
 import {PaymentsComponent} from '../../view/payments/payments.component';
 import {UpdateComponent} from '../../view/appointments/update/update.component';
 import {MaterialModule} from '../../material/material.module';
+import {AuthGuardService} from '../../auth/auth-guard.service';
 
 
 @NgModule({
@@ -54,7 +55,7 @@ import {MaterialModule} from '../../material/material.module';
     ReactiveFormsModule,
     AmazingTimePickerModule,
     MaterialModule,
-    SweetAlert2Module
+    SweetAlert2Module,
   ],
   entryComponents: [
     SavemodalComponent,
@@ -88,7 +89,8 @@ import {MaterialModule} from '../../material/material.module';
   ],
   providers: [
     {provide: DateAdapter, useClass: Formatdatepicker},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
+    AuthGuardService
   ]
 })
 

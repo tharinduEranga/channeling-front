@@ -12,6 +12,7 @@ import {MedicineComponent} from '../../view/medicine/medicine.component';
 import {PatientsComponent} from '../../view/patients/patients.component';
 import {AppointmentsComponent} from '../../view/appointments/appointments.component';
 import {PaymentsComponent} from '../../view/payments/payments.component';
+import {AuthGuardService} from '../../auth/auth-guard.service';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -19,14 +20,14 @@ export const AdminLayoutRoutes: Routes = [
         redirectTo: 'dashboard',
         pathMatch: 'full',
     },
-    { path: 'dashboard',      component: HomeComponent },
-    { path: 'patients',       component: PatientsComponent },
-    { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
-    { path: 'appointments',   component: AppointmentsComponent },
-    { path: 'upgrade',        component: UpgradeComponent },
-    { path: 'doctors',        component: DoctorComponent },
-    { path: 'other',          component: OtherComponent },
-    { path: 'medicine',       component: MedicineComponent },
-    { path: 'payments',       component: PaymentsComponent }
+    { path: 'dashboard',      component: HomeComponent, canActivate: [AuthGuardService] },
+    { path: 'patients',       component: PatientsComponent, canActivate: [AuthGuardService] },
+    { path: 'typography',     component: TypographyComponent, canActivate: [AuthGuardService] },
+    { path: 'icons',          component: IconsComponent, canActivate: [AuthGuardService] },
+    { path: 'appointments',   component: AppointmentsComponent, canActivate: [AuthGuardService] },
+    { path: 'upgrade',        component: UpgradeComponent, canActivate: [AuthGuardService] },
+    { path: 'doctors',        component: DoctorComponent, canActivate: [AuthGuardService] },
+    { path: 'other',          component: OtherComponent, canActivate: [AuthGuardService] },
+    { path: 'medicine',       component: MedicineComponent, canActivate: [AuthGuardService] },
+    { path: 'payments',       component: PaymentsComponent, canActivate: [AuthGuardService] }
 ];
