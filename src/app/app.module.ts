@@ -18,6 +18,7 @@ import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.componen
 import {LoginComponent} from './login/login.component';
 import {ErrorHandleChennel} from './util/ErrorHandleChennel';
 import {TokenInterceptor} from './auth/TokenInterceptor';
+import {MaterialModule} from './material/material.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {TokenInterceptor} from './auth/TokenInterceptor';
         NavbarModule,
         FooterModule,
         SidebarModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MaterialModule
     ],
     declarations: [
         AppComponent,

@@ -5,17 +5,19 @@
   <div class="container-fluid row">
     <div class="form-group" >
       <div class="col-md-12">
-        <label></label>User Name
-        <input class="form-control" type="text" name="username">
+        <mat-form-field>
+          <input [(ngModel)]="userName" type="text" matInput placeholder="Username" name="userName">
+        </mat-form-field>
         <br><br>
       </div>
       <div class="col-md-12">
-        <label></label>Password
-        <input class="form-control" type="password" name="password">
+        <mat-form-field>
+          <input [(ngModel)]="password" type="password" matInput placeholder="Password" name="password">
+        </mat-form-field>
         <br><br>
       </div>
       <div class="col-md-12">
-        <button class="btn btn-default col-md-12" name="loginBtn" routerLink="/">Log in</button>
+        <button class="btn btn-default col-md-12" name="loginBtn" (click)="login()">Log in</button>
       </div>
     </div>
   </div>

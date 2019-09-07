@@ -40,8 +40,8 @@ import {PatientsComponent} from '../../view/patients/patients.component';
 import {SavePatientComponent} from '../../view/patients/save-patient/save-patient.component';
 import {APP_DATE_FORMATS, Formatdatepicker} from '../../util/format- datepicker';
 import {PaymentsComponent} from '../../view/payments/payments.component';
-import {LoginComponent} from '../../login/login.component';
 import {UpdateComponent} from '../../view/appointments/update/update.component';
+import {MaterialModule} from '../../material/material.module';
 
 
 @NgModule({
@@ -51,22 +51,9 @@ import {UpdateComponent} from '../../view/appointments/update/update.component';
     FormsModule,
     LbdModule,
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE'}),
-    MatTableModule,
-    MatFormFieldModule,
-    MatPaginatorModule,
-    MatInputModule,
-    MatSortModule,
-    MatDialogModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatCheckboxModule,
     ReactiveFormsModule,
-    MatAutocompleteModule,
     AmazingTimePickerModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
+    MaterialModule,
     SweetAlert2Module
   ],
   entryComponents: [
