@@ -5,7 +5,7 @@ import {MedicineService} from '../../../services/medicine.service';
 import {BrandService} from '../../../services/brand.service';
 import {map, startWith} from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatOptionSelectionChange} from '@angular/material';
 
 @Component({
   selector: 'app-save-medicine',
@@ -38,8 +38,10 @@ export class SaveMedicineComponent implements OnInit {
     this.setMedicine();
   }
 
-  setBrand(brand) {
-    this.medicine.brand = brand;
+  setBrand(event: MatOptionSelectionChange, brand) {
+    if (event.source.selected) {
+      this.medicine.brand = brand;
+    }
   }
 
   saveMedicine() {
@@ -75,6 +77,14 @@ export class SaveMedicineComponent implements OnInit {
                 map(brand => typeof brand === 'string' ? brand : brand.name),
                 map(name => name ? this._filterBrand(name) : this.brandArray.slice())
             );
+        this.myControlBrand.valueChanges.subscribe( values  => {
+          if (!this.myControlBrand.value) {
+            this.medicine.brand = {
+              brandId: 0,
+              brandName: null
+            };
+          }
+        });
       }
     });
   }

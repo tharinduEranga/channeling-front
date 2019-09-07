@@ -40,6 +40,8 @@ import {PatientsComponent} from '../../view/patients/patients.component';
 import {SavePatientComponent} from '../../view/patients/save-patient/save-patient.component';
 import {APP_DATE_FORMATS, Formatdatepicker} from '../../util/format- datepicker';
 import {PaymentsComponent} from '../../view/payments/payments.component';
+import {LoginComponent} from '../../login/login.component';
+import {UpdateComponent} from '../../view/appointments/update/update.component';
 
 
 @NgModule({
@@ -72,7 +74,8 @@ import {PaymentsComponent} from '../../view/payments/payments.component';
     SaveComponent,
     SaveMedicineComponent,
     SaveBrandComponent,
-    SavePatientComponent
+    SavePatientComponent,
+    UpdateComponent
   ],
   declarations: [
     HomeComponent,
@@ -93,7 +96,8 @@ import {PaymentsComponent} from '../../view/payments/payments.component';
     AppointmentsComponent,
     PatientsComponent,
     SavePatientComponent,
-    PaymentsComponent
+    PaymentsComponent,
+    UpdateComponent
   ],
   providers: [
     {provide: DateAdapter, useClass: Formatdatepicker},

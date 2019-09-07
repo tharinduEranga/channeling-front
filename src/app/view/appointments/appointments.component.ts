@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import Swal from 'sweetalert2';
-import {MatOptionSelectionChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatOptionSelectionChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {PatientService} from '../../services/patient.service';
 import {DoctorService} from '../../services/doctor.service';
 import {map, startWith} from 'rxjs/operators';
 import {AppointmentsService} from '../../services/appointments.service';
+import {UpdateComponent} from './update/update.component';
 
 @Component({
   selector: 'app-appointments',
@@ -58,7 +59,7 @@ export class AppointmentsComponent implements OnInit {
   filteredDoctors: Observable<DoctorDTO[]>;
 
   constructor(private patientService: PatientService, private doctorService: DoctorService,
-              private appointmentsService: AppointmentsService) { }
+              private appointmentsService: AppointmentsService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getAllPatients();
@@ -153,7 +154,8 @@ export class AppointmentsComponent implements OnInit {
 
 
   appointTableClick(row) {
-
+    this.appointmentsService.setAppointment(row);
+    this.openAddAppointmentDialog();
   }
 
   appointTableDelete(row) {
@@ -209,6 +211,12 @@ export class AppointmentsComponent implements OnInit {
 
   setDate(event) {
     this._appointment.date = event.targetElement.value;
+  }
+
+  private openAddAppointmentDialog() {
+    this.dialog.open(UpdateComponent).afterClosed().subscribe(value => {
+      this.getAllAppointMents();
+    });
   }
 
   // =====================Getters and Setters==============================

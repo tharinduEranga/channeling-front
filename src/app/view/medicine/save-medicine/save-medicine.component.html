@@ -25,7 +25,7 @@
                     <mat-autocomplete autoActiveFirstOption #autoBrand="matAutocomplete"
                                       [displayWith]="displayFnBrand">
                         <mat-option *ngFor="let brand of filteredBrands | async;" [value]="brand"
-                                    (onSelectionChange)="setBrand(brand)">
+                                    (onSelectionChange)="setBrand($event, brand)">
                             {{brand.brandName}}
                         </mat-option>
                     </mat-autocomplete>

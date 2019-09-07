@@ -1,0 +1,61 @@
+<div style="width: 50vw; height: 75vh" class="container">
+    <h2 mat-dialog-title>Update Appointment</h2>
+    <mat-dialog-content class="mat-typography">
+        <h3>Please insert relevant data in below form</h3>
+        <!--<mat-dialog-actions>-->
+        <div class="row">
+            <br>
+            <div class="example-container col-md-12">
+                <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="Patient" aria-label="Number" matInput
+                           [formControl]="myControlPatient"
+                           [matAutocomplete]="autoPatient">
+                    <mat-autocomplete autoActiveFirstOption #autoPatient="matAutocomplete"
+                                      [displayWith]="displayFnPatient">
+                        <mat-option *ngFor="let patient of filteredPatients | async;" [value]="patient"
+                                    (onSelectionChange)="setPatient($event,patient)">
+                            {{patient.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <input type="text" placeholder="Doctor" aria-label="Number" matInput
+                           [formControl]="myControlDoctor"
+                           [matAutocomplete]="autoDoctor">
+                    <mat-autocomplete autoActiveFirstOption #autoDoctor="matAutocomplete"
+                                      [displayWith]="displayFnDoctor">
+                        <mat-option *ngFor="let doctor of filteredDoctors | async;" [value]="doctor"
+                                    (onSelectionChange)="setDoctor($event, doctor)">
+                            {{doctor.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input [(ngModel)]="appointmentsObject.issue" matInput placeholder="Issue" name="issue">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Select Date" [matDatepicker]="datepickerRef"
+                           name="datepicker" ngModel (dateChange)="setDate($event)"
+                           #dateCtrl="ngModel" [value]="appointmentsObject.date" required readonly/>
+                    <mat-datepicker-toggle [for]="datepickerRef" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #datepickerRef></mat-datepicker>
+                    <mat-error >Choose a Date</mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input [(ngModel)]="appointmentsObject.token_no" type="number" matInput placeholder="Token No" name="token_no">
+                </mat-form-field>
+            </div>
+            <div class="container-fluid">
+                <button mat-button mat-dialog-close class="btn btn-danger col-md-5 col-sm-12">Cancel</button>
+                <div class="col-md-2 col-sm-0"></div>
+                <button mat-button  class="btn btn-success col-md-5 col-sm-12"
+                        (click)="saveData()">Save
+                </button>
+            </div>
+        </div>
+    </mat-dialog-content>
+</div>
