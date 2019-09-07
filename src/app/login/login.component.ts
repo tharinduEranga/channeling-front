@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   userName = '';
   password = '';
 
+  loginButtonDisable = false;
+
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
@@ -25,13 +27,13 @@ export class LoginComponent implements OnInit {
       password: this.password
     };
     this.authService.loginAdmin(adminDTO).subscribe(value => {
-      console.log(adminDTO);
-      console.log(value);
+      this.loginButtonDisable = true;
       if (value.success) {
         this.router.navigateByUrl('/');
       } else {
         Swal.fire('Error', value.message, 'warning');
       }
+      this.loginButtonDisable = false;
     });
   }
 

@@ -6,18 +6,20 @@
     <div class="form-group" >
       <div class="col-md-12">
         <mat-form-field>
-          <input [(ngModel)]="userName" type="text" matInput placeholder="Username" name="userName">
+          <input [(ngModel)]="userName" type="text" matInput placeholder="Username" name="userName"
+                 (load)="this.focus()" (keyup.enter)="passwordText.focus()">
         </mat-form-field>
         <br><br>
       </div>
       <div class="col-md-12">
         <mat-form-field>
-          <input [(ngModel)]="password" type="password" matInput placeholder="Password" name="password">
+          <input [(ngModel)]="password" type="password" matInput placeholder="Password" name="password"
+                 (keyup.enter)="login()" #passwordText>
         </mat-form-field>
         <br><br>
       </div>
       <div class="col-md-12">
-        <button class="btn btn-default col-md-12" name="loginBtn" (click)="login()">Log in</button>
+        <button [disabled]="loginButtonDisable" class="btn btn-default col-md-12" name="loginBtn" (click)="login()">Log in</button>
       </div>
     </div>
   </div>
