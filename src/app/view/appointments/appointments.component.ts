@@ -170,7 +170,7 @@ export class AppointmentsComponent implements OnInit {
 
   private getAllAppointMents() {
     this.isLoading = true;
-    this.appointmentsService.getAll().subscribe( value => {
+    this.appointmentsService.getFutureAppointments().subscribe( value => {
       if (value.success) {
         // @ts-ignore
         this._appointments = value.body;
