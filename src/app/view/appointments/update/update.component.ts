@@ -54,7 +54,6 @@ export class UpdateComponent implements OnInit {
               private doctorService: DoctorService, private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.setAppointments();
     this.getAllPatients();
     this.getAllDoctors();
   }
@@ -72,9 +71,8 @@ export class UpdateComponent implements OnInit {
 
   private setAppointments() {
     this.appointmentsObject = JSON.parse(JSON.stringify(this.appointmentsService.getAppointment()));
-    this.myControlDoctor.setValue(this.appointmentsObject.doctor.name);
-    this.myControlPatient.setValue(this.appointmentsObject.patient.name);
-    console.log(this.myControlDoctor.value);
+    this.myControlDoctor.setValue(this.appointmentsObject.doctor);
+    this.myControlPatient.setValue(this.appointmentsObject.patient);
   }
 
   displayFnPatient(patient ?: PatientDTO): string | undefined {
@@ -129,6 +127,8 @@ export class UpdateComponent implements OnInit {
             };
           }
         });
+        // this should be after all the API calls are received but added temporally for patient call
+        this.setAppointments();
       }
     });
   }
