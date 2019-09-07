@@ -11,19 +11,7 @@ import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MatAutocompleteModule,
-  MatCheckboxModule, MatDatepickerModule,
-  MatDialogModule,
-  MatFormFieldModule,
-  MatInputModule, MatNativeDateModule,
-  MatOptionModule,
-  MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule,
-  MatSortModule,
-  MatTableModule
-} from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import {DoctorComponent} from '../../view/doctor/doctor.component';
 import {PanelHeadComponent} from '../../view/panel-head/panel-head.component';
 import {SavemodalComponent} from '../../view/doctor/savemodal/savemodal.component';

@@ -4,7 +4,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from '../../home/home.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {DoctorComponent} from '../../view/doctor/doctor.component';
 import {OtherComponent} from '../../view/other/other.component';
