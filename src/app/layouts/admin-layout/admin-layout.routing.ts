@@ -12,6 +12,7 @@ import {PatientsComponent} from '../../view/patients/patients.component';
 import {AppointmentsComponent} from '../../view/appointments/appointments.component';
 import {PaymentsComponent} from '../../view/payments/payments.component';
 import {AuthGuardService} from '../../auth/auth-guard.service';
+import {ReportsComponent} from '../../view/reports/reports.component';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -22,7 +23,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: HomeComponent, canActivate: [AuthGuardService] },
     { path: 'patients',       component: PatientsComponent, canActivate: [AuthGuardService] },
     { path: 'typography',     component: TypographyComponent, canActivate: [AuthGuardService] },
-    { path: 'icons',          component: IconsComponent, canActivate: [AuthGuardService] },
+    { path: 'reports',        component: ReportsComponent, canActivate: [AuthGuardService] },
     { path: 'appointments',   component: AppointmentsComponent, canActivate: [AuthGuardService] },
     { path: 'upgrade',        component: UpgradeComponent, canActivate: [AuthGuardService] },
     { path: 'doctors',        component: DoctorComponent, canActivate: [AuthGuardService] },

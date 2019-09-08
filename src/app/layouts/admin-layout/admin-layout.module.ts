@@ -31,6 +31,7 @@ import {PaymentsComponent} from '../../view/payments/payments.component';
 import {UpdateComponent} from '../../view/appointments/update/update.component';
 import {MaterialModule} from '../../material/material.module';
 import {AuthGuardService} from '../../auth/auth-guard.service';
+import {ReportsComponent} from '../../view/reports/reports.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import {AuthGuardService} from '../../auth/auth-guard.service';
     PatientsComponent,
     SavePatientComponent,
     PaymentsComponent,
-    UpdateComponent
+    UpdateComponent,
+    ReportsComponent
   ],
   providers: [
     {provide: DateAdapter, useClass: Formatdatepicker},
