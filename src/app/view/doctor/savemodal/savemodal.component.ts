@@ -145,6 +145,17 @@ export class SavemodalComponent implements OnInit {
     }
 
     saveDoctor() {
+
+        if (this.doctor.name === undefined || this.doctor.name === null || this.doctor.name === '') {
+            Swal.fire('Invalid name!', 'Name is required', 'warning');
+            return;
+        }
+
+        if (this.doctor.tel === undefined || this.doctor.tel === null || this.doctor.tel === '') {
+            Swal.fire('Invalid tel no!', 'Tel no is required', 'warning');
+            return;
+        }
+
         const docDays = [];
         if (this.isMonday) {
             docDays.push({

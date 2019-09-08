@@ -16,10 +16,15 @@ export class AuthService {
   }
 
   get isLogged(): boolean {
-    return this._isLogged;
+    return localStorage.getItem('token') != null && localStorage.getItem('token') !== undefined;
   }
 
   set isLogged(value: boolean) {
+    if (value) {
+      localStorage.setItem('token', 'value');
+    } else {
+      localStorage.removeItem('token');
+    }
     this._isLogged = value;
   }
 }
