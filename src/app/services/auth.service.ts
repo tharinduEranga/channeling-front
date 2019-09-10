@@ -9,6 +9,15 @@ import {Observable} from 'rxjs';
 export class AuthService {
   private readonly LOGIN_URL = Common.BASE_URL + 'admins/';
   private _isLogged = false;
+  private _userData = {
+    admin: {
+      adminId: 0,
+      userName: null,
+      password: null,
+      roles: null
+    },
+    token: null
+  };
   constructor(private httpClient: HttpClient) { }
 
   loginAdmin(adminDTO): Observable<CommonResponse<AdminDTO>> {
@@ -16,15 +25,21 @@ export class AuthService {
   }
 
   get isLogged(): boolean {
-    return localStorage.getItem('token') != null && localStorage.getItem('token') !== undefined;
+    return this._userData !== undefined && this._userData != null;
   }
 
-  set isLogged(value: boolean) {
-    if (value) {
-      localStorage.setItem('token', 'value');
+  get userData() {
+    return this._userData;
+  }
+
+  set userData(value) {
+    this._userData = value;
+    if (value !== null) {
+      localStorage.setItem('token', this.userData.token);
+      this._isLogged = true;
     } else {
       localStorage.removeItem('token');
+      this._isLogged = false;
     }
-    this._isLogged = value;
   }
 }
