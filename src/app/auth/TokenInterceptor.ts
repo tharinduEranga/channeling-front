@@ -10,10 +10,11 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/retry'
 import {retry} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-    constructor() {
+    constructor(private router: Router) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -33,6 +34,7 @@ export class TokenInterceptor implements HttpInterceptor {
                 const newReq = request.clone();
                 return next.handle(newReq).pipe(retry(3));
             }
+            this.router.navigateByUrl('/login');
         });
     }
 }
