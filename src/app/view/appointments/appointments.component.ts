@@ -159,6 +159,28 @@ export class AppointmentsComponent implements OnInit {
   }
 
   appointTableDelete(row) {
+    const appointmentId = row.appointmentId;
+
+    Swal.fire({
+      title : 'Are you sure?' ,
+      text : 'You won\'t be able to revert this!' ,
+      type : 'warning',
+      showCancelButton : true,
+      confirmButtonColor: '#3085d6' ,
+      cancelButtonColor : '#d33' ,
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.appointmentsService.delete(appointmentId).subscribe(value => {
+          if (value.success) {
+            this.getAllAppointMents();
+            Swal.fire('Done!', 'Appointment is Deleted!', 'success');
+          } else {
+            Swal.fire('Failed!', value.message, 'error');
+          }
+        })
+      }
+    })
   }
 
   applyAppointmentFilter(filterValue: string) {

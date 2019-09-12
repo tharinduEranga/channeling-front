@@ -87,7 +87,28 @@ export class OtherComponent implements OnInit {
   }
 
   hospTblDeleteClick(row: any) {
-    Swal.fire('Table click!', 'delete hospital', 'success');
+    const hospitalId = row.hospitalId;
+
+    Swal.fire({
+      title : 'Are you sure?' ,
+      text : 'You won\'t be able to revert this!' ,
+      type : 'warning',
+      showCancelButton : true,
+      confirmButtonColor: '#3085d6' ,
+      cancelButtonColor : '#d33' ,
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.hospitalService.delete(hospitalId).subscribe(value => {
+          if (value.success) {
+            this.getAllHospitals();
+            Swal.fire('Done!', 'Hopital is Deleted!', 'success');
+          } else {
+            Swal.fire('Failed!', value.message, 'error');
+          }
+        })
+      }
+    })
   }
 
   specTblEditClick(row: any) {
@@ -95,7 +116,28 @@ export class OtherComponent implements OnInit {
   }
 
   specTblDeleteClick(row: any) {
-    Swal.fire('Table click!', 'delete Spec', 'success');
+    const specialityId = row.specialityId;
+
+    Swal.fire({
+      title : 'Are you sure?' ,
+      text : 'You won\'t be able to revert this!' ,
+      type : 'warning',
+      showCancelButton : true,
+      confirmButtonColor: '#3085d6' ,
+      cancelButtonColor : '#d33' ,
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.specialityService.delete(specialityId).subscribe(value => {
+          if (value.success) {
+            this.getAllSpecialities();
+            Swal.fire('Done!', 'Speciality is Deleted!', 'success');
+          } else {
+            Swal.fire('Failed!', value.message, 'error');
+          }
+        })
+      }
+    })
   }
 
   addNewHospital() {

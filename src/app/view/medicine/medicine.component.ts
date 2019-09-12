@@ -122,7 +122,28 @@ export class MedicineComponent implements OnInit {
   }
 
   tableDelete(row: any) {
-    Swal.fire('tbl', 'delete', 'success');
+    const medicineId = row.medicineId;
+
+    Swal.fire({
+      title : 'Are you sure?' ,
+      text : 'You won\'t be able to revert this!' ,
+      type : 'warning',
+      showCancelButton : true,
+      confirmButtonColor: '#3085d6' ,
+      cancelButtonColor : '#d33' ,
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.medicineService.delete(medicineId).subscribe(value => {
+          if (value.success) {
+            this.getAllBrands();
+            Swal.fire('Done!', 'Medicine is Deleted!', 'success');
+          } else {
+            Swal.fire('Failed!', value.message, 'error');
+          }
+        })
+      }
+    })
   }
 
   addNewBrand() {
@@ -132,6 +153,28 @@ export class MedicineComponent implements OnInit {
   }
 
   brandTblDeleteClick(row: any) {
+    const brandId = row.brandId;
+
+    Swal.fire({
+      title : 'Are you sure?' ,
+      text : 'You won\'t be able to revert this!' ,
+      type : 'warning',
+      showCancelButton : true,
+      confirmButtonColor: '#3085d6' ,
+      cancelButtonColor : '#d33' ,
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.brandService.delete(brandId).subscribe(value => {
+          if (value.success) {
+            this.getAllBrands();
+            Swal.fire('Done!', 'Brand is Deleted!', 'success');
+          } else {
+            Swal.fire('Failed!', value.message, 'error');
+          }
+        })
+      }
+    })
   }
 
   brandTblEditClick(row: any) {

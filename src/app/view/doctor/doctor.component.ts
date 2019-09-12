@@ -3,6 +3,7 @@ import {MatTableDataSource, MatPaginator, MatSort, MatDialog} from '@angular/mat
 
 import {DoctorService} from '../../services/doctor.service';
 import {SavemodalComponent} from './savemodal/savemodal.component';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-doctor',
@@ -86,5 +87,27 @@ export class DoctorComponent implements OnInit {
   }
 
   tableDelete(row) {
+    const doctorId = row.doctorId;
+
+    Swal.fire({
+      title : 'Are you sure?' ,
+      text : 'You won\'t be able to revert this!' ,
+      type : 'warning',
+      showCancelButton : true,
+      confirmButtonColor: '#3085d6' ,
+      cancelButtonColor : '#d33' ,
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.doctorService.delete(doctorId).subscribe(value => {
+          if (value.success) {
+            this.getAllDoctors();
+            Swal.fire('Done!', 'Doctor is Deleted!', 'success');
+          } else {
+            Swal.fire('Failed!', value.message, 'error');
+          }
+        })
+      }
+    })
   }
 }
