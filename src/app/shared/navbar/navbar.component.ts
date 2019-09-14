@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
     // moduleId: module.id,
@@ -15,7 +16,7 @@ export class NavbarComponent implements OnInit{
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(location: Location,  private element: ElementRef, private route: Router) {
+    constructor(location: Location,  private element: ElementRef, private route: Router, private authService: AuthService) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -66,6 +67,8 @@ export class NavbarComponent implements OnInit{
     }
     logOut() {
         // const booleanPromise = this.route.navigateByUrl('login');
+        this.authService.userData = null;
+        this.route.navigateByUrl('/login');
         return true;
     }
 }

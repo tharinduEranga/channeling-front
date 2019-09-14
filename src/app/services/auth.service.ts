@@ -29,16 +29,18 @@ export class AuthService {
   }
 
   get userData() {
-    return this._userData;
+    return JSON.parse(localStorage.getItem('userData'));
   }
 
   set userData(value) {
     this._userData = value;
     if (value !== null) {
-      localStorage.setItem('token', this.userData.token);
+      localStorage.setItem('userData', JSON.stringify(this._userData.admin));
+      localStorage.setItem('token', this._userData.token);
       this._isLogged = true;
     } else {
       localStorage.removeItem('token');
+      localStorage.removeItem('userData');
       this._isLogged = false;
     }
   }
