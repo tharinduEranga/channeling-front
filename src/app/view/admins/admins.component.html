@@ -1,1 +1,46 @@
-<p>admins works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header" style="text-align: center">
+                        <h4 class="title">View all admins</h4>
+                        <p class="category">You can also manage admin data here</p>
+                    </div>
+                    <div class="content">
+                        <app-loading *ngIf="isLoading"></app-loading>
+                        <div [hidden]="isLoading">
+
+                            <mat-form-field>
+                                <mat-select placeholder="Admin role">
+                                    <mat-option *ngFor="let role of roles" [value]="role" (click)="admin.roles=role">{{role}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <input matInput placeholder="Username" type="text" name="username" (focus)="userNameReadOnly=false"
+                                           [(ngModel)]="admin.userName" autocomplete="off" [readonly]="userNameReadOnly">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <input matInput placeholder="Password" type="password" name="password" (focus)="passwordReadOnly=false"
+                                           [(ngModel)]="admin.password" autocomplete="off" [readonly]="passwordReadOnly">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="container-fluid">
+                                <div class="col-md-2 col-sm-0"></div>
+                                <button mat-button  class="btn btn-success col-md-5 col-sm-12"
+                                        (click)="saveAdmin()">Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,6 +13,7 @@ import {PaymentsComponent} from '../../view/payments/payments.component';
 import {AuthGuardService} from '../../auth/auth-guard.service';
 import {ReportsComponent} from '../../view/reports/reports.component';
 import {AdminAuthService} from '../../auth/admin-auth.service';
+import {AdminsComponent} from '../../view/admins/admins.component';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -29,5 +30,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'doctors',        component: DoctorComponent, canActivate: [AuthGuardService, AdminAuthService] },
     { path: 'other',          component: OtherComponent, canActivate: [AuthGuardService, AdminAuthService] },
     { path: 'medicine',       component: MedicineComponent, canActivate: [AuthGuardService, AdminAuthService] },
-    { path: 'payments',       component: PaymentsComponent, canActivate: [AuthGuardService, AdminAuthService] }
+    { path: 'payments',       component: PaymentsComponent, canActivate: [AuthGuardService, AdminAuthService] },
+    { path: 'admins',       component: AdminsComponent, canActivate: [AuthGuardService, AdminAuthService] }
 ];

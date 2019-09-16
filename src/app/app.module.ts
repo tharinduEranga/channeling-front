@@ -19,7 +19,6 @@ import {LoginComponent} from './login/login.component';
 import {ErrorHandleChennel} from './util/ErrorHandleChennel';
 import {TokenInterceptor} from './auth/TokenInterceptor';
 import {MaterialModule} from './material/material.module';
-import { AdminsComponent } from './view/admins/admins.component';
 
 
 @NgModule({
@@ -37,8 +36,7 @@ import { AdminsComponent } from './view/admins/admins.component';
     declarations: [
         AppComponent,
         AdminLayoutComponent,
-        LoginComponent,
-        AdminsComponent
+        LoginComponent
     ],
     providers: [
         {provide: ErrorHandler, useClass: ErrorHandleChennel},
