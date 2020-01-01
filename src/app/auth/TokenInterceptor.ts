@@ -11,10 +11,11 @@ import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/retry'
 import {retry} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {AuthService} from '../services/auth.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-    constructor(private router: Router) {
+    constructor(private router: Router, private authService: AuthService) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -29,12 +30,16 @@ export class TokenInterceptor implements HttpInterceptor {
             return response;
         }).catch(err => {
             console.log(err);
-            if (err instanceof HttpErrorResponse && err.status === 401) {
-                // this.tokenService.getAccessToken().subscribe(value => {localStorage.setItem('token',value.token});
+            // if (err instanceof HttpErrorResponse && err.status === 401) {
+            //     // this.tokenService.getAccessToken().subscribe(value => {localStorage.setItem('token',value.token});
+            //     const newReq = request.clone();
+            //     return next.handle(newReq).pipe(retry(3));
+            // }
+            if (err.status === 401) {
+                this.router.navigateByUrl('/login');
                 const newReq = request.clone();
                 return next.handle(newReq).pipe(retry(3));
             }
-            this.router.navigateByUrl('/login');
         });
     }
 }

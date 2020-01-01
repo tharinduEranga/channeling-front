@@ -14,11 +14,15 @@ export class AdminAuthService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean
       | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     this.userData = this.authService.userData;
-    if (this.userData.roles === Roles.ADMIN) {
-      return true;
-    } else {
-      this.router.navigateByUrl('/appointments');
-      return false;
+    try {
+      if (this.userData.roles === Roles.ADMIN) {
+        return true;
+      } else {
+        this.router.navigateByUrl('/appointments');
+        return false;
+      }
+    } catch (e) {
+      this.router.navigateByUrl('/login');
     }
   }
 }

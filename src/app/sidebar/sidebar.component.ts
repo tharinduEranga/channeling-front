@@ -47,6 +47,7 @@ export class SidebarComponent implements OnInit {
             ROUTES.push(
                 {path: '/dashboard', title: 'Dashboard', icon: '../../assets/img/faces/patient.png', class: ''},
                 {path: '/doctors', title: 'Doctors', icon: '../../assets/img/faces/patient.png', class: ''},
+                {path: '/appointments', title: 'Appointments', icon: '../../assets/img/faces/patient.png', class: ''},
                 {path: '/medicine', title: 'Medicine', icon: '../../assets/img/faces/patient.png', class: ''},
                 {path: '/patients', title: 'Patients', icon: '../../assets/img/faces/patient.png', class: ''},
                 {path: '/payments', title: 'Payments', icon: '../../assets/img/faces/patient.png', class: ''},

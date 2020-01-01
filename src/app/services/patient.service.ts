@@ -5,7 +5,7 @@ import {DataService} from './common/data.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PatientService extends DataService<PatientDTO>{
+export class PatientService extends DataService<PatientDTO> {
   private isUpdate: boolean;
   private patient: PatientDTO;
   constructor(private httpClient: HttpClient) {

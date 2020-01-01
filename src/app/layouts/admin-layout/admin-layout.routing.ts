@@ -14,6 +14,8 @@ import {AuthGuardService} from '../../auth/auth-guard.service';
 import {ReportsComponent} from '../../view/reports/reports.component';
 import {AdminAuthService} from '../../auth/admin-auth.service';
 import {AdminsComponent} from '../../view/admins/admins.component';
+import {ReceptionAuthService} from '../../auth/reception-auth.service';
+import {DoctorAuthService} from '../../auth/doctor-auth.service';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -21,15 +23,15 @@ export const AdminLayoutRoutes: Routes = [
         redirectTo: 'dashboard',
         pathMatch: 'full',
     },
-    { path: 'dashboard',      component: HomeComponent, canActivate: [AuthGuardService, AdminAuthService] },
-    { path: 'patients',       component: PatientsComponent, canActivate: [AuthGuardService, AdminAuthService] },
+    { path: 'dashboard',      component: HomeComponent, canActivate: [AuthGuardService, DoctorAuthService] },
+    { path: 'patients',       component: PatientsComponent, canActivate: [AuthGuardService, ReceptionAuthService] },
     { path: 'typography',     component: TypographyComponent, canActivate: [AuthGuardService, AdminAuthService] },
     { path: 'reports',        component: ReportsComponent, canActivate: [AuthGuardService, AdminAuthService] },
-    { path: 'appointments',   component: AppointmentsComponent, canActivate: [AuthGuardService] },
+    { path: 'appointments',   component: AppointmentsComponent, canActivate: [AuthGuardService, DoctorAuthService] },
     { path: 'upgrade',        component: UpgradeComponent, canActivate: [AuthGuardService] },
-    { path: 'doctors',        component: DoctorComponent, canActivate: [AuthGuardService, AdminAuthService] },
-    { path: 'other',          component: OtherComponent, canActivate: [AuthGuardService, AdminAuthService] },
-    { path: 'medicine',       component: MedicineComponent, canActivate: [AuthGuardService, AdminAuthService] },
-    { path: 'payments',       component: PaymentsComponent, canActivate: [AuthGuardService, AdminAuthService] },
+    { path: 'doctors',        component: DoctorComponent, canActivate: [AuthGuardService, ReceptionAuthService] },
+    { path: 'other',          component: OtherComponent, canActivate: [AuthGuardService, ReceptionAuthService] },
+    { path: 'medicine',       component: MedicineComponent, canActivate: [AuthGuardService, ReceptionAuthService] },
+    { path: 'payments',       component: PaymentsComponent, canActivate: [AuthGuardService, ReceptionAuthService] },
     { path: 'admins',       component: AdminsComponent, canActivate: [AuthGuardService, AdminAuthService] }
 ];
